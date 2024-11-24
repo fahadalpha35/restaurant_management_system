@@ -21,6 +21,12 @@ class ProductsController extends Controller
         return view('products.index', compact('products'));
     }
 
+    public function getSubcategories($categoryId)
+    {
+        $subcategories = DB::table('subcategory')->where('category_id', $categoryId)->get();
+        return response()->json($subcategories);
+    }
+
     /**
      * Show the form for creating a new resource.
      */

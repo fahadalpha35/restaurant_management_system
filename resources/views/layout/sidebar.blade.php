@@ -49,7 +49,7 @@
           <a href="#" class="nav-link {{ Request::is('groups*') ? 'active' : '' }}">
             <i class="nav-icon fas fa-chart-pie"></i>
             <p>
-              Groups
+              Roles
               <i class="right fas fa-angle-left"></i>
             </p>
           </a>
@@ -57,13 +57,13 @@
             <li class="nav-item">
               <a href="{{ route('groups.create') }}" class="nav-link {{ Request::is('groups/create') ? 'active' : '' }}">
                 <i class="far fa-circle nav-icon"></i>
-                <p>Add Group</p>
+                <p>Add Role</p>
               </a>
             </li>
             <li class="nav-item">
               <a href="{{ route('groups.index') }}" class="nav-link {{ Request::is('groups') ? 'active' : '' }}">
                 <i class="far fa-circle nav-icon"></i>
-                <p>Manage Groups</p>
+                <p>Manage Roles</p>
               </a>
             </li>
           </ul>

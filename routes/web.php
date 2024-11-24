@@ -26,6 +26,8 @@ Route::middleware(['auth'])->group(function () {
     // Route::get('stores/fetchStores', [StoresController::class, 'fetchStores'])->name('stores.fetchStores');
     Route::resource('categories', CategoryController::class);
     Route::resource('subcategories', SubCategoryController::class);
+    // Route for fetching subcategories based on category
+    Route::get('/get-subcategories/{categoryId}', [ProductsController::class, 'getSubcategories']);
     Route::resource('company', CompanyController::class);
     Route::resource('groups', GroupsController::class);
     Route::resource('orders', OrdersController::class);

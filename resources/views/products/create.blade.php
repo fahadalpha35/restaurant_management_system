@@ -19,7 +19,7 @@
         @csrf
             <div class="form-group">
                 <label for="category_id">Category</label>
-                <select name="category_id" id="category_id" class="form-control">
+                <select name="category_id" id="category_id" class="form-control"  required>
                     <option value="">Select Category</option>
                     @foreach($categories as $category)
                         <option value="{{ $category->id }}">{{ $category->name }}</option>
@@ -31,9 +31,6 @@
                 <label for="subcategory_id">Subcategory</label>
                 <select name="subcategory_id" id="subcategory_id" class="form-control">
                     <option value="">Select Sub Category</option>
-                    @foreach($subcategories as $subcategory)
-                        <option value="{{ $subcategory->id }}">{{ $subcategory->name }}</option>
-                    @endforeach
                 </select>
             </div>
 
@@ -75,22 +72,30 @@
     </section>
 </div>
 
+<!-- jQuery should be included if not already -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script>
-    // Fetch subcategories based on selected category
-    document.getElementById('category_id').addEventListener('change', function() {
-        const categoryId = this.value;
-        fetch(`/api/subcategories/${categoryId}`)
-            .then(response => response.json())
-            .then(data => {
-                const subcategorySelect = document.getElementById('subcategory_id');
-                subcategorySelect.innerHTML = '<option value="">Select Subcategory</option>';
-                data.forEach(subcategory => {
-                    const option = document.createElement('option');
-                    option.value = subcategory.id;
-                    option.textContent = subcategory.name;
-                    subcategorySelect.appendChild(option);
+    $(document).ready(function() {
+        $('#category_id').on('change', function() {
+            var categoryId = $(this).val();
+            if(categoryId) {
+                $.ajax({
+                    url: '/get-subcategories/' + categoryId,
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function(data) {
+                        $('#subcategory_id').empty();
+                        $('#subcategory_id').append('<option value="">Select Sub Category</option>');
+                        $.each(data, function(key, value) {
+                            $('#subcategory_id').append('<option value="' + value.id + '">' + value.name + '</option>');
+                        });
+                    }
                 });
-            });
+            } else {
+                $('#subcategory_id').empty();
+                $('#subcategory_id').append('<option value="">Select Sub Category</option>');
+            }
+        });
     });
 </script>
 @endsection
