@@ -61,10 +61,10 @@
                             <a href="{{ route('password.request') }}" class="form-link">{{ __('Forgot Your Password?') }}</a>
                         @endif
                     </div> -->
-                    <div>
+                    <!-- <div>
                         Don't have an account?
                         <a href="{{ route('register') }}" class="form-link">{{ __('Register') }}</a>
-                    </div>
+                    </div> -->
                 </footer>
             </form>
         </div>
