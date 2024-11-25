@@ -2,11 +2,13 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\API\AuthController;
 
-// Authentication routes
-// Route::post('register', [RegisterController::class, 'register']);
-// Route::post('login', [LoginController::class, 'login']);
-// Route::post('logout', [LoginController::class, 'logout'])->middleware('auth:sanctum');
+// Route::get('register', [AuthController::class, 'showRegisterForm']);
+// Route::post('register', [AuthController::class, 'register'])->name('register');
+Route::post('api/v1/login', [AuthController::class, 'login']);
+// Route::post('/', [AuthController::class, 'login'])->name('login');
+Route::post('logout', [AuthController::class, 'logout'])->name('logout');
 
 // Protected routes
 Route::middleware('auth:sanctum')->group(function () {
