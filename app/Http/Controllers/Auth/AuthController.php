@@ -111,6 +111,12 @@ class AuthController extends Controller
    
     public function logout(Request $request)
     {
+        // Delete all user's tokens
+        $user = Auth::user();
+        if ($user) {
+            $user->tokens()->delete();
+        }
+
         // Use the Auth facade to logout the user
         Auth::logout();
         $request->session()->invalidate();
