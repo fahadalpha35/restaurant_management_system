@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class OrdersController extends Controller
 {
@@ -11,7 +12,11 @@ class OrdersController extends Controller
      */
     public function index()
     {
-        return view('orders.index');
+        $order = DB::table('orders')
+        ->join('stores', 'stores.id', '=', 'orders.store_id')
+        ->select('orders.*', 'stores.name as store_name')
+        ->get();
+        return view('orders.index', compact('order'));
     }
 
     /**
@@ -19,7 +24,11 @@ class OrdersController extends Controller
      */
     public function create()
     {
-        //
+        $tables = DB::table('tables')->get();
+        $product = DB::table('products')->get();
+
+        // dd($corder);
+        return view('orders.create', compact('tables','product'));
     }
 
     /**

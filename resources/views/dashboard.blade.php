@@ -13,8 +13,11 @@
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="{{url('/')}}" style="color: #007bff; font-weight: 500;">Home</a></li>
-                        <li class="breadcrumb-item active" style="color: #6c757d;">Dashboard</li>
-                    </ol>
+                        <li class="breadcrumb-item active" style="color: #6c757d;">Dashboard</li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <div class="contentrightalign">
+                        <a href="{{route('orders.create')}}" class="btn btn-secondary" style="background-color:#FFC300;"><font color="#000;"><b>Place Order</b></font></a>
+                        </div>
+                      </ol>
                 </div>
             </div>
         </div>
@@ -846,5 +849,11 @@
         </div>
     </section>
 </div>
+
+<style>
+  @media screen and (max-width: 566px) {
+    .contentrightalign {right: 0px;position: absolute;}
+  }
+</style>
 
 @endsection

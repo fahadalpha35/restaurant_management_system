@@ -8,12 +8,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">Dashboard</h1>
+            <h1 class="m-0">Order Lists</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Dashboard v1</li>
+              <li class="breadcrumb-item active">Order Lists</li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -22,17 +22,89 @@
     <!-- /.content-header -->
 
     <!-- Main content -->
-    <section class="content">
+    <section class="content" style="background-color:#fff;padding:20px;">
       <div class="container-fluid">
+      <a href="{{ route('orders.create') }}" class="btn btn-primary mb-3">Add New Order</a>
 
+      @if(session('success'))
+          <div class="alert alert-success">
+              {{ session('success') }}
+          </div>
+      @endif
 
-        test
-
-
-
+      <table id="storesTable" class="table table-bordered">
+      <thead>
+          <tr>
+              <th>Bill No.</th>
+              <th>Store</th>
+              <th>Date Time</th>
+              <th>Total Products</th>
+              <th>Total Amount</th>
+              <th>Paid Status</th>
+              <th>Actions</th>
+          </tr>
+      </thead>
+      <tbody>
+          @foreach($order as $orders)
+              <tr>
+                  <td>{{ $orders->bill_no }}</td>
+                  <td>{{ $orders->store_name }}</td>
+                  <td>{{ $orders->date_time }}</td>
+                  <td></td>
+                  <td> BDT</td>
+                  <td>{{ $orders->paid_status ? 'Yes' : 'No' }}</td>
+                  <td>
+                      <a href="{{ route('orders.edit', $orders->id) }}" class="btn btn-info btn-sm">Edit</a>
+                      <form action="{{ route('orders.destroy', $orders->id) }}" method="POST" style="display:inline-block;">
+                          @csrf
+                          @method('DELETE')
+                          <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                      </form>
+                  </td>
+              </tr>
+          @endforeach
+      </tbody>
+      </table>
       </div><!-- /.container-fluid -->
     </section>
     <!-- /.content -->
   </div>
 
   @endsection
+
+  @push('masterScripts')
+<script>
+     $(document).ready(function() {
+    $('#storesTable').DataTable({
+      responsive: true, // Enable responsive behavior
+      dom: 'Bfrtip',
+        buttons: [
+            {
+                extend: 'print',
+                exportOptions: {
+                    columns: ':not(:last-child)' // Exclude the last column (Labeling) from printing
+                }
+            },
+            {
+                extend: 'csvHtml5',
+                exportOptions: {
+                    columns: ':not(:last-child)' // Exclude the last column (Labeling) from CSV
+                }
+            },
+            {
+                extend: 'excelHtml5',
+                exportOptions: {
+                    columns: ':not(:last-child)' // Exclude the last column (Labeling) from Excel
+                }
+            },
+            {
+                extend: 'pdfHtml5',
+                exportOptions: {
+                    columns: ':not(:last-child)' // Exclude the last column (Labeling) from PDF
+                }
+            }
+        ]
+    });
+});
+  </script>
+  @endpush
