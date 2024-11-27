@@ -180,13 +180,13 @@
         <li class="nav-item">
           <a href="{{ route('profile.index') }}" class="nav-link {{ Request::is('profile') ? 'active' : '' }}">
             <i class="nav-icon fas fa-user"></i>
-            <p>Profile</p>
+            <p>Profile </p>
           </a>
         </li>
         
         <!-- Setting -->
         <li class="nav-item">
-          <a href="{{ route('profile.create') }}" class="nav-link {{ Request::is('profile/create') ? 'active' : '' }}">
+          <a href="{{ route('edit_profile', ['id' =>  Auth::user()->id ]) }}" class="nav-link {{ Request::is('profile/edit') ? 'active' : '' }}">
             <i class="nav-icon fas fa-gear"></i>
             <p>Setting</p>
           </a>

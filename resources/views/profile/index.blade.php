@@ -45,7 +45,7 @@
                                 </div> -->
 
                                 <div class="profile-image mb-4">
-                                    <img src="http://restaurant.test/dist/img/fahad.jpg" 
+                                    <img src="{{ asset('images/users/' . $user->image) }}" 
                                          alt="Profile Image" 
                                          class="img-thumbnail" 
                                          style="width: 150px; height: 150px; object-fit: cover; border-radius: 50%;">
@@ -88,8 +88,8 @@
                                             <td>{{ $user->phone }}</td>
                                         </tr>
                                         <tr>
-                                            <td><strong>Group</strong></td>
-                                            <td><button class="btn btn-info btn-sm">Super Administrator</button></td>
+                                            <td><strong>Role</strong></td>
+                                            <td><button class="btn btn-info btn-sm">{{ $user->role_name }}</button></td>
                                         </tr>
                                     </tbody>
                                 </table>

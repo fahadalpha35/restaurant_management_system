@@ -84,9 +84,9 @@
       popovertarget="my-popover"
       popovertargetaction="show"
       class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
-      style="font-family: 'Noto Serif TC', serif; font-optical-sizing: auto;padding:0px;border-radius: 6px;"
+      style="font-family: 'Noto Serif TC', serif; font-optical-sizing: auto;padding:0px;border-radius: 6px;height:25px;margin-top:7px;"
     >
-      <img src="{{ asset('dist/img/cal.png') }}" width="30" alt="logo">
+      <img src="{{ asset('dist/img/cal.png') }}" width="20" alt="logo" style="margin-top:-3px;">
     </button>
   </div>
 </div>&nbsp;&nbsp;

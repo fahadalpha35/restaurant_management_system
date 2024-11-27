@@ -47,6 +47,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::resource('users', UsersController::class);
     Route::resource('profile', ProfileController::class);
     Route::resource('/home', HomeController::class);
+    //profile details update
+    Route::get('edit_profile/{id}', [ProfileController::class, 'edit'])->name('edit_profile');
 
 });
 
