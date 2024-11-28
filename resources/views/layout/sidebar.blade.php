@@ -2,7 +2,8 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
   <!-- Brand Logo -->
   <a href="{{ url('/') }}" class="brand-link reslogo" style="background: radial-gradient(circle, rgba(245,250,255,1) 97%, rgba(63,94,251,1) 100%);border: 4px solid #007bff;">
-    <center><img src="{{ asset('dist/img/orms.png') }}" alt="AdminLTE Logo" style="width:220px;"></center>
+  <!-- <center><img src="{{ asset('dist/img/orms.png') }}" alt="AdminLTE Logo" style="width:220px;"></center>   -->
+  <center><img src="{{ asset('dist/img/orms.png') }}" alt="AdminLTE Logo" style="width:220px;height:30px;"></center>
   </a>
 
   <!-- Sidebar -->
@@ -170,7 +171,7 @@
         
         <!-- Company Info -->
         <li class="nav-item">
-          <a href="{{ route('company.index') }}" class="nav-link {{ Request::is('company') ? 'active' : '' }}">
+          <a href="{{ route('edit_company', ['id' =>  Auth::user()->company_id ]) }}" class="nav-link {{ Request::is('edit_company*') ? 'active' : '' }}">
             <i class="nav-icon fas fa-building"></i>
             <p>Company Info</p>
           </a>

@@ -1,111 +1,107 @@
 @extends('layout.layout')
-@section('content')  
-  
-  <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper" style="padding:20px;">
-    <!-- Content Header (Page header) -->
-    <div class="content-header">
-      <div class="container-fluid">
-        <div class="row mb-2">
-          <div class="col-sm-6">
-            <h1 class="m-0">Add New Order</h1>
-          </div><!-- /.col -->
-          <div class="col-sm-6">
-            <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Create Order</li>
-            </ol>
-          </div><!-- /.col -->
-        </div><!-- /.row -->
-      </div><!-- /.container-fluid -->
-    </div>
-    <!-- /.content-header -->
+@section('content')
 
-    <!-- Main content -->
-    <section class="content" style="background-color:#fff;padding:20px;">
-      <div class="container-fluid">
-      <section class="order-form">
-            <div class="order-form-header">
-                <h2>Bill No. : #654648</h2>
-                <div class="date-time">
-                    <div>Date: <span id="currentDate"></span></div>
-                    <div>Date: <span id="currentTime"></span></div>
+<div class="content-wrapper" style="padding:20px;">
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0">Add New Order</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item active">Create Order</li>
+                    </ol>
                 </div>
             </div>
-            <form>
-                <div class="table-selection">
-                    <label for="table">Table</label>&nbsp;&nbsp;
-                    <select id="table" style="padding:3px;">
-                        <option value="" selected disabled>Select Table</option>
-                        @foreach($tables as $table)
-                        <option value="{{ $table->id }}">{{ $table->table_name }}</option>
-                        @endforeach
-                    </select>
-                </div>
+        </div>
+    </div>
 
-                <div class="product-selection">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Product</th>
-                                <th>Qty</th>
-                                <th>Rate</th>
-                                <th>Amount</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>
-                                    <select  class="product-dropdown form-control select2bs4">
-                                        <option value="" selected disabled>Select Product</option>
-                                        @foreach($product as $products)
-                                        <option value="{{ $products->id }}">{{ $products->name }}</option>
-                                        @endforeach
-                                    </select>
-                                </td>
-                                <td><input type="number" class="quantity" placeholder="Qty"></td>
-                                <td><input type="text" class="rate" readonly></td>
-                                <td><input type="text" class="amount" readonly></td>
-                                <td>
-                                    <button type="button" class="add-btn">+</button>
-                                    <button type="button" class="remove-btn">x</button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-
-                <div class="amount-summary">
-                    <div class="summary-item">
-                        <label>Gross Amount</label>
-                        <input type="text" class="gross-amount" readonly>
-                    </div>
-                    <div class="summary-item">
-                        <label>Vat 13%</label>
-                        <input type="text" class="vat-amount" readonly>
-                    </div>
-                    <div class="summary-item">
-                        <label>Discount</label>
-                        <input type="text" class="discount" placeholder="Discount">
-                    </div>
-                    <div class="summary-item">
-                        <label>Net Amount</label>
-                        <input type="text" class="net-amount" readonly>
+    <section class="content" style="background-color:#fff;padding:20px;">
+        <div class="container-fluid">
+            <section class="order-form">
+                <div class="order-form-header">
+                    <h2>Bill No. : #654648</h2>
+                    <div class="date-time">
+                        <div>Date: <span id="currentDate"></span></div>
+                        <div>Time: <span id="currentTime"></span></div>
                     </div>
                 </div>
 
-                <div class="action-buttons">
-                <center><button type="submit" class="create-order-btn">Create Order</button></center>
-                    <center><a href="{{route('orders.index')}}" class="btn btn-secondary" style="background-color:#FFC300;"><font color="#000;"><b>Back</b></font></a></center>
-                    <!-- <button type="button" class="back-btn">Back</button> -->
-                </div>
-            </form>
-        </section>
-      </div><!-- /.container-fluid -->
+                <form action="{{ route('orders.store') }}" method="POST">
+                    @csrf
+                    <div class="table-selection">
+                        <label for="table">Table</label>&nbsp;&nbsp;
+                        <select name="table" id="table" style="padding:3px;">
+                            <option value="" selected disabled>Select Table</option>
+                            @foreach($tables as $table)
+                                <option value="{{ $table->id }}">{{ $table->table_name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div class="product-selection">
+                        <table id="product-table">
+                            <thead>
+                                <tr>
+                                    <th>Product</th>
+                                    <th>Qty</th>
+                                    <th>Rate</th>
+                                    <th>Amount</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="product-row">
+                                    <td>
+                                        <select name="products[0][product_id]" class="product-dropdown form-control select2bs4">
+                                            <option value="" selected disabled>Select Product</option>
+                                            @foreach($products as $product)
+                                                <option value="{{ $product->id }}" data-rate="{{ $product->price }}">{{ $product->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </td>
+                                    <td><input type="number" name="products[0][qty]" class="quantity" placeholder="Qty" required></td>
+                                    <td><input type="text" name="products[0][rate]" class="rate" readonly></td>
+                                    <td><input type="text" name="products[0][amount]" class="amount" readonly></td>
+                                    <td>
+                                        <button type="button" class="add-btn">+</button>
+                                        <button type="button" class="remove-btn">x</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="amount-summary">
+                        <div class="summary-item">
+                            <label>Gross Amount</label>
+                            <input type="text" name="gross_amount" class="gross-amount" readonly>
+                        </div>
+                        <div class="summary-item">
+                            <label>Vat 13%</label>
+                            <input type="text" name="vat_charge_amount" class="vat-amount" readonly>
+                        </div>
+                        <div class="summary-item">
+                            <label>Discount</label>
+                            <input type="text" name="discount" class="discount" placeholder="Discount">
+                        </div>
+                        <div class="summary-item">
+                            <label>Net Amount</label>
+                            <input type="text" name="net_amount" class="net-amount" readonly>
+                        </div>
+                    </div>
+
+                    <div class="action-buttons">
+                        <center><button type="submit" class="create-order-btn">Create Order</button></center>
+                        <center><a href="{{ route('orders.index') }}" class="btn btn-secondary" style="background-color:#FFC300;"><font color="#000;"><b>Back</b></font></a></center>
+                    </div>
+                </form>
+            </section>
+        </div>
     </section>
-    <!-- /.content -->
-  </div>
+</div>
 
   <style>
     /* Input Field ReadOnly */
@@ -251,34 +247,43 @@ table td {
 </style>
 
 <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const dateElement = document.getElementById('currentDate');
+        const timeElement = document.getElementById('currentTime');
+        const productTable = document.getElementById('product-table');
+        
+        const currentDate = new Date();
+        dateElement.textContent = currentDate.toISOString().split('T')[0];
+        timeElement.textContent = currentDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
-		document.addEventListener('DOMContentLoaded', function () {
-		const dateElement = document.getElementById('currentDate');
-		const timeElement = document.getElementById('currentTime');
+        // Add a new product row
+        document.querySelector('.add-btn').addEventListener('click', function () {
+            const newRow = document.querySelector('.product-row').cloneNode(true);
+            productTable.querySelector('tbody').appendChild(newRow);
+            updateRowIndexes();
+        });
 
-		// Display current date and time
-		const currentDate = new Date();
-		dateElement.textContent = currentDate.toISOString().split('T')[0];
-		timeElement.textContent = currentDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        // Remove product row
+        productTable.addEventListener('click', function (e) {
+            if (e.target.classList.contains('remove-btn')) {
+                e.target.closest('tr').remove();
+                updateRowIndexes();
+            }
+        });
 
-		// Add functionality to buttons
-		const addButton = document.querySelector('.add-btn');
-		const removeButton = document.querySelector('.remove-btn');
+        // Update row indexes for form data
+        function updateRowIndexes() {
+            document.querySelectorAll('.product-row').forEach((row, index) => {
+                row.querySelector('.product-dropdown').name = `products[${index}][product_id]`;
+                row.querySelector('.quantity').name = `products[${index}][qty]`;
+                row.querySelector('.rate').name = `products[${index}][rate]`;
+                row.querySelector('.amount').name = `products[${index}][amount]`;
+            });
+        }
+    });
+</script>
 
-		addButton.addEventListener('click', function () {
-			// Functionality for adding a new product row
-			alert('Add product row functionality goes here.');
-		});
-
-		removeButton.addEventListener('click', function () {
-			// Functionality for removing the product row
-			alert('Remove product row functionality goes here.');
-		});
-	});
-
-	</script>
-
-  @endsection
+@endsection
 
   @push('masterScripts')
   <script>
@@ -291,4 +296,3 @@ table td {
 
   </script>
   @endpush
-

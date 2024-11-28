@@ -21,11 +21,7 @@ class CompanyController extends Controller
      */
     public function edit(string $id)
     {
-        // Fetch company data using DB facade
-        $id = 1;
         $company = DB::table('company')->where('id', $id)->first();
-
-        // Return the edit view with the fetched data
         return view('company.edit', compact('company'));
     }
 
@@ -44,21 +40,42 @@ class CompanyController extends Controller
             'country' => 'required|string|max:255',
             'message' => 'required|string',
             'currency' => 'required|string|max:255',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Image validation
         ]);
 
-        // Update the company information using DB facade
-        DB::table('company')->where('id', $id)->update([
-            'company_name' => $request->company_name,
-            'service_charge_value' => $request->service_charge_value,
-            'vat_charge_value' => $request->vat_charge_value,
-            'address' => $request->address,
-            'phone' => $request->phone,
-            'country' => $request->country,
-            'message' => $request->message,
-            'currency' => $request->currency,
+        $data = $request->only([
+            'company_name',
+            'service_charge_value',
+            'vat_charge_value',
+            'address',
+            'phone',
+            'country',
+            'message',
+            'currency',
         ]);
 
-        // Redirect back with success message
-        return redirect()->route('company.index')->with('success', 'Company profile updated successfully.');
+        // Handle image upload
+        if ($request->hasFile('image')) {
+            $company = DB::table('company')->where('id', $id)->first();
+
+            // Delete old image if it exists
+            if ($company && $company->image) {
+                $oldImagePath = public_path('images/company/' . $company->image);
+                if (file_exists($oldImagePath)) {
+                    unlink($oldImagePath);
+                }
+            }
+
+            // Store the new image
+            $image = $request->file('image');
+            $imageName = time() . '_' . $image->getClientOriginalName();
+            $image->move(public_path('images/company'), $imageName);
+            $data['image'] = $imageName;
+        }
+
+        // Update the database record
+        DB::table('company')->where('id', $id)->update($data);
+
+        return redirect()->route('edit_company', $id)->with('success', 'Company profile updated successfully.');
     }
 }

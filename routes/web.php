@@ -16,6 +16,7 @@ use App\Http\Controllers\TablesController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\SidebarController;
 
 Route::get('register', [AuthController::class, 'showRegisterForm']);
 Route::post('register', [AuthController::class, 'register'])->name('register');
@@ -47,8 +48,11 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::resource('users', UsersController::class);
     Route::resource('profile', ProfileController::class);
     Route::resource('/home', HomeController::class);
+    Route::get('sidebar', [SidebarController::class, 'index'])->name('sidebar');
     //profile details update
     Route::get('edit_profile/{id}', [ProfileController::class, 'edit'])->name('edit_profile');
+    //profile details update
+    Route::get('edit_company/{id}', [CompanyController::class, 'edit'])->name('edit_company');
 
 });
 

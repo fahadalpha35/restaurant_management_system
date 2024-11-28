@@ -1,31 +1,26 @@
 @extends('layout.layout')
 @section('content')
 
-<!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper" style="padding:20px;">
-    <!-- Content Header (Page header) -->
     <div class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
                     <h1 class="m-0">Edit Company Profile</h1>
-                </div><!-- /.col -->
+                </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="#">Home</a></li>
                         <li class="breadcrumb-item active">Edit Company Profile</li>
                     </ol>
-                </div><!-- /.col -->
-            </div><!-- /.row -->
-        </div><!-- /.container-fluid -->
+                </div>
+            </div>
+        </div>
     </div>
-    <!-- /.content-header -->
 
-    <!-- Main content -->
     <section class="content">
         <div class="container-fluid">
-
-        @if(session('success'))
+            @if(session('success'))
                 <div class="alert alert-success">{{ session('success') }}</div>
             @endif
 
@@ -39,7 +34,6 @@
                 </div>
             @endif
 
-            <!-- Form for editing the company profile -->
             <form action="{{ route('company.update', $company->id) }}" method="POST" enctype="multipart/form-data" style="background-color:#fff;padding:20px;">
                 @csrf
                 @method('PUT')
@@ -88,15 +82,14 @@
                     <label for="image">Company Image</label>
                     <input type="file" name="image" id="image" class="form-control">
                     @if($company->image)
-                        <img src="{{ asset('images/company/' . $company->image) }}" alt="Profile Image" width="100">
+                        <img src="{{ asset('images/company/' . $company->image) }}" alt="Company Image" width="100" style="margin-top:10px;">
                     @endif
                 </div>
 
                 <button type="submit" class="btn btn-primary">Update Company</button>
             </form>
-        </div><!-- /.container-fluid -->
+        </div>
     </section>
-    <!-- /.content -->
 </div>
 
 @endsection
