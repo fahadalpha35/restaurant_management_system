@@ -220,7 +220,7 @@
                 <a href="{{route('profile.index')}}" class="dropdown-item">
                                     {{ Auth::user()->firstname }}&nbsp;{{ Auth::user()->lastname }}
                     </a>
-                    <a href="{{route('profile.create')}}" class="dropdown-item">
+                    <a href="{{ route('edit_profile', ['id' =>  Auth::user()->id ]) }}" class="dropdown-item">
                     <i class="ti-settings text-primary" ></i>
                     Settings
                     </a>

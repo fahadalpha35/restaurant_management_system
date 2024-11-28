@@ -75,6 +75,10 @@ class ProfileController extends Controller
         // Handle image upload if present
         if ($request->hasFile('image') && $request->file('image')->isValid()) {
             
+            // Validate file size explicitly if needed
+        if ($request->file('image')->getSize() > 2048 * 1024) { // 2MB in bytes
+            return redirect()->back()->with('error', 'The image must be less than 2MB.');
+        }
 
             // Check and delete the old image if it exists
             $user = DB::table('users')->where('id', $id)->first();
@@ -110,7 +114,8 @@ class ProfileController extends Controller
      
         }else{
             // Redirect with success message
-            return redirect()->route('edit_profile', ['id' => $id])->with('warning', 'No Changes is occured.');
+            DB::table('users')->where('id', $id)->update($data);
+            return redirect()->route('edit_profile', ['id' => $id])->with('success', 'Profile updated successfully.');
         }
 
        

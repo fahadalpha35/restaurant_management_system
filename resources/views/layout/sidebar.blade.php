@@ -12,7 +12,7 @@
       <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
         <!-- Dashboard -->
         <li class="nav-item menu-open">
-          <a href="{{ url('/') }}" class="nav-link {{ Request::is('/') ? 'active' : '' }}">
+          <a href="{{ url('dashboard') }}" class="nav-link {{ Request::is('dashboard') ? 'active' : '' }}">
             <i class="nav-icon fas fa-tachometer-alt"></i>
             <p>Dashboard</p>
           </a>
@@ -186,7 +186,7 @@
         
         <!-- Setting -->
         <li class="nav-item">
-          <a href="{{ route('edit_profile', ['id' =>  Auth::user()->id ]) }}" class="nav-link {{ Request::is('profile/edit') ? 'active' : '' }}">
+          <a href="{{ route('edit_profile', ['id' =>  Auth::user()->id ]) }}" class="nav-link {{ Request::is('edit_profile*') ? 'active' : '' }}">
             <i class="nav-icon fas fa-gear"></i>
             <p>Setting</p>
           </a>
