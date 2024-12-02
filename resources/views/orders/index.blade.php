@@ -51,8 +51,8 @@
                   <td>{{ $orders->store_name }}</td>
                   <td>{{ $orders->date_time }}</td>
                   <td></td>
-                  <td> BDT</td>
-                  <td>{{ $orders->paid_status ? 'Yes' : 'No' }}</td>
+                  <td>{{ $orders->net_amount }} BDT</td>
+                  <td>{{ $orders->paid_status ? 'Paid' : 'Unpaid' }}</td>
                   <td>
                       <a href="{{ route('orders.edit', $orders->id) }}" class="btn btn-info btn-sm">Edit</a>
                       <form action="{{ route('orders.destroy', $orders->id) }}" method="POST" style="display:inline-block;">
@@ -78,6 +78,7 @@
     $('#storesTable').DataTable({
       responsive: true, // Enable responsive behavior
       dom: 'Bfrtip',
+      order: [[0, 'desc']],
         buttons: [
             {
                 extend: 'print',

@@ -81,9 +81,12 @@
                 <div class="form-group">
                     <label for="image">Company Image</label>
                     <input type="file" name="image" id="image" class="form-control">
-                    @if($company->image)
-                        <img src="{{ asset('images/company/' . $company->image) }}" alt="Company Image" width="100" style="margin-top:10px;">
-                    @endif
+                    <div>
+                        <img 
+                            src="{{ $company->image ? asset('images/company/' . $company->image) : asset('images/company/item.png') }}" 
+                            alt="Profile Image" 
+                            width="100">
+                    </div>
                 </div>
 
                 <button type="submit" class="btn btn-primary">Update Company</button>

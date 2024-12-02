@@ -15,7 +15,7 @@
 
     <section class="content" style="background-color:#fff;padding:20px;">
         <div class="container-fluid">
-        <form action="{{ route('products.store') }}" method="POST">
+        <form action="{{ route('products.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
             <div class="form-group">
                 <label for="category_id">Category</label>
@@ -64,6 +64,11 @@
                     <option value="1">Yes</option>
                     <option value="0">No</option>
                 </select>
+            </div>
+
+            <div class="form-group">
+                    <label for="image">Product Image</label>
+                    <input type="file" name="image" id="image" class="form-control">
             </div>
 
             <button type="submit" class="btn btn-primary">Save Product</button>

@@ -32,6 +32,7 @@
             <thead>
                 <tr>
                     <th>ID</th>
+                    <th>Image</th>
                     <th>Item Name</th>
                     <th>Category</th>
                     <th>Subcategory</th>
@@ -45,6 +46,11 @@
                 @foreach($products as $product)
                     <tr>
                         <td>{{ $product->id }}</td>
+                        <td>
+                            <center>
+                                <img src="{{ asset('images/products/' . ($product->image ? $product->image : 'item.png')) }}" alt="Product Image" width="50" />
+                            </center>
+                        </td>
                         <td>{{ $product->name }}</td>
                         <td>{{ $product->category_name }}</td>
                         <td>{{ $product->subcategory_name }}</td>

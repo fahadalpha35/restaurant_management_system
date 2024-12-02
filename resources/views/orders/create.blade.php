@@ -1,109 +1,93 @@
 @extends('layout.layout')
-@section('content')
 
+@section('content')
 <div class="content-wrapper" style="padding:20px;">
     <div class="content-header">
         <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1 class="m-0">Add New Order</h1>
-                </div>
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active">Create Order</li>
-                    </ol>
-                </div>
-            </div>
+            <h1>Create Order</h1>
         </div>
     </div>
 
     <section class="content" style="background-color:#fff;padding:20px;">
-        <div class="container-fluid">
-            <section class="order-form">
-                <div class="order-form-header">
-                    <h2>Bill No. : #654648</h2>
+    <div class="order-form-header">
+                    <h2>Bill No. : ORD-674BF</h2>
                     <div class="date-time">
                         <div>Date: <span id="currentDate"></span></div>
                         <div>Time: <span id="currentTime"></span></div>
                     </div>
                 </div>
+        <form action="{{ route('orders.store') }}" method="POST">
+            @csrf
+            <div class="form-group">
+                <label for="table">Table</label>
+                <select name="table" id="table" class="form-control" required>
+                    <option value="" disabled selected>Select Table</option>
+                    @foreach($tables as $table)
+                        <option value="{{ $table->id }}">{{ $table->table_name }}</option>
+                    @endforeach
+                </select>
+            </div>
 
-                <form action="{{ route('orders.store') }}" method="POST">
-                    @csrf
-                    <div class="table-selection">
-                        <label for="table">Table</label>&nbsp;&nbsp;
-                        <select name="table" id="table" style="padding:3px;">
-                            <option value="" selected disabled>Select Table</option>
-                            @foreach($tables as $table)
-                                <option value="{{ $table->id }}">{{ $table->table_name }}</option>
-                            @endforeach
-                        </select>
-                    </div>
+            <div class="product-section">
+                <table id="product-table" class="table">
+                    <thead>
+                        <tr>
+                            <th>Product</th>
+                            <th>Qty</th>
+                            <th>Rate</th>
+                            <th>Amount</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <select name="products[0][product_id]" class="form-control product-select" required>
+                                    <option value="" disabled selected>Select Product</option>
+                                    @foreach($products as $product)
+                                        <option value="{{ $product->id }}">{{ $product->name }}</option>
+                                    @endforeach
+                                </select>
+                            </td>
+                            <td><input type="number" name="products[0][qty]" class="form-control qty-input" min="1" value="1" required></td>
+                            <td><input type="text" name="products[0][rate]" class="form-control rate-input" value="20" readonly></td>
+                            <td><input type="text" name="products[0][amount]" class="form-control amount-input" readonly></td>
+                            <td>
+                                <button type="button" class="btn btn-success add-row-btn">+</button>
+                                <button type="button" class="btn btn-danger remove-row-btn">x</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
 
-                    <div class="product-selection">
-                        <table id="product-table">
-                            <thead>
-                                <tr>
-                                    <th>Product</th>
-                                    <th>Qty</th>
-                                    <th>Rate</th>
-                                    <th>Amount</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr class="product-row">
-                                    <td>
-                                        <select name="products[0][product_id]" class="product-dropdown form-control select2bs4">
-                                            <option value="" selected disabled>Select Product</option>
-                                            @foreach($products as $product)
-                                                <option value="{{ $product->id }}" data-rate="{{ $product->price }}">{{ $product->name }}</option>
-                                            @endforeach
-                                        </select>
-                                    </td>
-                                    <td><input type="number" name="products[0][qty]" class="quantity" placeholder="Qty" required></td>
-                                    <td><input type="text" name="products[0][rate]" class="rate" readonly></td>
-                                    <td><input type="text" name="products[0][amount]" class="amount" readonly></td>
-                                    <td>
-                                        <button type="button" class="add-btn">+</button>
-                                        <button type="button" class="remove-btn">x</button>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
+            <div class="summary-section">
+                <label>Gross Amount</label>
+                <input type="text" name="gross_amount" id="gross-amount" class="form-control" readonly>
+                <label>Service Charge (10%)</label>
+                <input type="text" name="service_charge_amount" id="service-charge-amount" class="form-control" readonly>
+                <label>VAT (15%)</label>
+                <input type="text" name="vat_charge_amount" id="vat-charge-amount" class="form-control" readonly>
+                <label>Discount</label>
+                <input type="number" name="discount" id="discount" class="form-control" min="0">
+                <label>Net Amount</label>
+                <input type="text" name="net_amount" id="net-amount" class="form-control" readonly>
+            </div>
 
-                    <div class="amount-summary">
-                        <div class="summary-item">
-                            <label>Gross Amount</label>
-                            <input type="text" name="gross_amount" class="gross-amount" readonly>
-                        </div>
-                        <div class="summary-item">
-                            <label>Vat 13%</label>
-                            <input type="text" name="vat_charge_amount" class="vat-amount" readonly>
-                        </div>
-                        <div class="summary-item">
-                            <label>Discount</label>
-                            <input type="text" name="discount" class="discount" placeholder="Discount">
-                        </div>
-                        <div class="summary-item">
-                            <label>Net Amount</label>
-                            <input type="text" name="net_amount" class="net-amount" readonly>
-                        </div>
-                    </div>
+            <div class="form-group">
+                <label for="paid_status">Payment Status</label>
+                <select name="paid_status" class="form-control">
+                        <option value="0">Not Paid</option>
+                        <option value="1">Paid</option>
+                    </select>
+            </div>
 
-                    <div class="action-buttons">
-                        <center><button type="submit" class="create-order-btn">Create Order</button></center>
-                        <center><a href="{{ route('orders.index') }}" class="btn btn-secondary" style="background-color:#FFC300;"><font color="#000;"><b>Back</b></font></a></center>
-                    </div>
-                </form>
-            </section>
-        </div>
+            <button type="submit" class="btn btn-primary">Submit Order</button>
+        </form>
     </section>
 </div>
 
-  <style>
+<style>
     /* Input Field ReadOnly */
     input[readonly] {
         background-color: #f0f0f0; /* Light grey background */
@@ -247,45 +231,66 @@ table td {
 </style>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const dateElement = document.getElementById('currentDate');
-        const timeElement = document.getElementById('currentTime');
-        const productTable = document.getElementById('product-table');
-        
-        const currentDate = new Date();
+document.addEventListener('DOMContentLoaded', function () {
+    const productTable = document.querySelector('#product-table tbody');
+    const grossAmountField = document.getElementById('gross-amount');
+    const serviceChargeAmountField = document.getElementById('service-charge-amount');
+    const vatChargeAmountField = document.getElementById('vat-charge-amount');
+    const netAmountField = document.getElementById('net-amount');
+    const discountField = document.getElementById('discount');
+    const dateElement = document.getElementById('currentDate');
+    const timeElement = document.getElementById('currentTime');
+
+    const currentDate = new Date();
         dateElement.textContent = currentDate.toISOString().split('T')[0];
         timeElement.textContent = currentDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
-        // Add a new product row
-        document.querySelector('.add-btn').addEventListener('click', function () {
-            const newRow = document.querySelector('.product-row').cloneNode(true);
-            productTable.querySelector('tbody').appendChild(newRow);
-            updateRowIndexes();
+    function calculateAmounts() {
+        let grossAmount = 0;
+        productTable.querySelectorAll('tr').forEach(row => {
+            const qty = row.querySelector('.qty-input').value || 0;
+            const rate = row.querySelector('.rate-input').value || 20;
+            const amountField = row.querySelector('.amount-input');
+            const amount = qty * rate;
+            amountField.value = amount.toFixed(2);
+            grossAmount += amount;
         });
+        grossAmountField.value = grossAmount.toFixed(2);
+        const serviceCharge = (10 / 100) * grossAmount;
+        serviceChargeAmountField.value = serviceCharge.toFixed(2);
+        const vatCharge = (15 / 100) * grossAmount;
+        vatChargeAmountField.value = vatCharge.toFixed(2);
+        const discount = discountField.value || 0;
+        const netAmount = grossAmount + serviceCharge + vatCharge - discount;
+        netAmountField.value = netAmount.toFixed(2);
+    }
 
-        // Remove product row
-        productTable.addEventListener('click', function (e) {
-            if (e.target.classList.contains('remove-btn')) {
-                e.target.closest('tr').remove();
-                updateRowIndexes();
-            }
-        });
+    productTable.addEventListener('change', calculateAmounts);
+    discountField.addEventListener('input', calculateAmounts);
 
-        // Update row indexes for form data
-        function updateRowIndexes() {
-            document.querySelectorAll('.product-row').forEach((row, index) => {
-                row.querySelector('.product-dropdown').name = `products[${index}][product_id]`;
-                row.querySelector('.quantity').name = `products[${index}][qty]`;
-                row.querySelector('.rate').name = `products[${index}][rate]`;
-                row.querySelector('.amount').name = `products[${index}][amount]`;
+    productTable.addEventListener('click', function (event) {
+        if (event.target.classList.contains('add-row-btn')) {
+            const newRow = productTable.querySelector('tr').cloneNode(true);
+            newRow.querySelectorAll('input, select').forEach(input => {
+                input.value = input.name.includes('[rate]') ? '20' : '';
             });
+            newRow.querySelector('.qty-input').value = '1';
+            productTable.appendChild(newRow);
+        }
+        if (event.target.classList.contains('remove-row-btn')) {
+            if (productTable.querySelectorAll('tr').length > 1) {
+                event.target.closest('tr').remove();
+                calculateAmounts();
+            }
         }
     });
-</script>
 
+    calculateAmounts();
+});
+</script>
 @endsection
 
-  @push('masterScripts')
+@push('masterScripts')
   <script>
     $(document).ready(function() {
         $('.select2bs4').select2({

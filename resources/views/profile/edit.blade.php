@@ -106,9 +106,12 @@
                 <div class="form-group">
                     <label for="image">Profile Image</label>
                     <input type="file" name="image" id="image" class="form-control">
-                    @if($profile->image)
-                        <img src="{{ asset('images/users/' . $profile->image) }}" alt="Profile Image" width="100">
-                    @endif
+                    <div>
+                        <img 
+                            src="{{ $profile->image ? asset('images/users/' . $profile->image) : asset('images/users/item.png') }}" 
+                            alt="Profile Image" 
+                            width="100">
+                    </div>
                 </div>
 
                 <button type="submit" class="btn btn-primary">Update Profile</button>

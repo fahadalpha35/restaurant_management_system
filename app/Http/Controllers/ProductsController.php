@@ -52,16 +52,30 @@ class ProductsController extends Controller
             'active' => 'required',
         ]);
 
-        DB::table('products')->insert([
-            'category_id' => $request->category_id,
-            'subcategory_id' => $request->subcategory_id,
-            'store_id' => $request->store_id, // Set a default value for store_id if not available
-            'name' => $request->name,
-            'price' => $request->price,
-            'description' => $request->description,
-            'image' => '', // Handle image upload separately if needed
-            'active' => $request->active,
+        $data = $request->only([
+            'category_id',
+            'subcategory_id',
+            'store_id', // Set a default value for store_id if not available
+            'name',
+            'price',
+            'description',
+            'active',
         ]);
+
+            // Handle image upload
+            if ($request->hasFile('image')) {
+                // Store the new image
+                $image = $request->file('image');
+                $imageName = time() . '_' . $image->getClientOriginalName();
+                $image->move(public_path('images/products'), $imageName);
+                $data['image'] = $imageName;
+            } else {
+                // Set a default image if none is uploaded
+                $data['image'] = 'item.png'; 
+            }
+
+        // Insert the new product into the 'products' table
+         DB::table('products')->insert($data);
 
         return redirect()->route('products.index')->with('success', 'Product created successfully.');
     }
@@ -93,19 +107,40 @@ class ProductsController extends Controller
             'active' => 'required',
         ]);
 
-        DB::table('products')
-            ->where('id', $id)
-            ->update([
-                'category_id' => $request->category_id,
-                'subcategory_id' => $request->subcategory_id,
-                'store_id' => $request->store_id,
-                'name' => $request->name,
-                'price' => $request->price,
-                'description' => $request->description,
-                'active' => $request->active,
-            ]);
+        $data = $request->only([
+            'category_id',
+            'subcategory_id',
+            'store_id',
+            'name',
+            'price',
+            'description',
+            'active',
+        ]);
+
+        // Handle image upload
+        if ($request->hasFile('image')) {
+            $product = DB::table('products')->where('id', $id)->first();
+
+            // Delete old image if it exists
+            if ($product && $product->image) {
+                $oldImagePath = public_path('images/products/' . $product->image);
+                if (file_exists($oldImagePath)) {
+                    unlink($oldImagePath);
+                }
+            }
+
+            // Store the new image
+            $image = $request->file('image');
+            $imageName = time() . '_' . $image->getClientOriginalName();
+            $image->move(public_path('images/products'), $imageName);
+            $data['image'] = $imageName;
+        }
+
+        // Update the database record
+        DB::table('products')->where('id', $id)->update($data);
 
         return redirect()->route('products.index')->with('success', 'Product updated successfully.');
+
     }
 
     /**

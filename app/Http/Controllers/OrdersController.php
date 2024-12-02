@@ -16,6 +16,7 @@ class OrdersController extends Controller
         $orders = DB::table('orders')
             ->join('stores', 'stores.id', '=', 'orders.store_id')
             ->select('orders.*', 'stores.name as store_name')
+            ->orderBy('orders.id', 'desc')
             ->get();
         return view('orders.index', compact('orders'));
     }
@@ -27,7 +28,8 @@ class OrdersController extends Controller
     {
         $tables = DB::table('tables')->get();
         $products = DB::table('products')->get();
-        return view('orders.create', compact('tables', 'products'));
+        $orders = DB::table('orders')->get();
+        return view('orders.create', compact('tables', 'products', 'orders'));
     }
 
     /**
@@ -35,35 +37,44 @@ class OrdersController extends Controller
      */
     public function store(Request $request)
     {
-        // Validation
         $request->validate([
             'table' => 'required|exists:tables,id',
-            'products' => 'required|array',
+            'products' => 'required|array|min:1',
             'products.*.product_id' => 'required|exists:products,id',
             'products.*.qty' => 'required|numeric|min:1',
             'products.*.rate' => 'required|numeric|min:0',
+            'products.*.amount' => 'required|numeric|min:0',
         ]);
 
-        // Insert Order
+        // Calculate totals
+        $grossAmount = array_sum(array_column($request->products, 'amount'));
+        $serviceChargeRate = 10; // Dummy value
+        $serviceChargeAmount = ($serviceChargeRate / 100) * $grossAmount;
+        $vatChargeRate = 15; // Dummy value
+        $vatChargeAmount = ($vatChargeRate / 100) * $grossAmount;
+        $discount = $request->discount ?? 0;
+        $netAmount = $grossAmount + $serviceChargeAmount + $vatChargeAmount - $discount;
+
+        // Store order data
         $orderData = [
             'bill_no' => 'ORD-' . strtoupper(uniqid()),
             'date_time' => now(),
-            'gross_amount' => $request->gross_amount,
-            'service_charge_rate' => $request->service_charge_rate,
-            'service_charge_amount' => $request->service_charge_amount,
-            'vat_charge_rate' => $request->vat_charge_rate,
-            'vat_charge_amount' => $request->vat_charge_amount,
-            'discount' => $request->discount,
-            'net_amount' => $request->net_amount,
-            'user_id' => Auth::id(),  // Assuming the user is logged in
+            'gross_amount' => $grossAmount,
+            'service_charge_rate' => $serviceChargeRate,
+            'service_charge_amount' => $serviceChargeAmount,
+            'vat_charge_rate' => $vatChargeRate,
+            'vat_charge_amount' => $vatChargeAmount,
+            'discount' => $discount,
+            'net_amount' => $netAmount,
+            'user_id' => Auth::id(),
             'table_id' => $request->table,
-            'paid_status' => 0,  // Assuming the order is unpaid by default
-            'store_id' => 1,  // Assuming 1 is the store_id, you can adjust based on your setup
+            'paid_status' =>  $request->paid_status,
+            'store_id' => 1,
         ];
 
         $orderId = DB::table('orders')->insertGetId($orderData);
 
-        // Insert Order Items
+        // Store order items
         foreach ($request->products as $product) {
             DB::table('order_items')->insert([
                 'order_id' => $orderId,
@@ -74,38 +85,14 @@ class OrdersController extends Controller
             ]);
         }
 
-        return redirect()->route('orders.index')->with('success', 'Order has been placed successfully.');
+        return redirect()->route('orders.index')->with('success', 'Order created successfully.');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(string $id)
     {
-        //
+        // Delete table record
+        DB::table('orders')->where('id', $id)->delete();
+
+        return redirect()->route('orders.index')->with('success', 'Order deleted successfully!');
     }
 }

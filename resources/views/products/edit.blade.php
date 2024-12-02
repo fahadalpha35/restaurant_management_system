@@ -15,7 +15,7 @@
 
     <section class="content" style="background-color:#fff;padding:20px;">
         <div class="container-fluid">
-            <form action="{{ route('products.update', $product->id) }}" method="POST">
+            <form action="{{ route('products.update', $product->id) }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
 
@@ -69,6 +69,25 @@
                         <option value="0" {{ $product->active == 0 ? 'selected' : '' }}>No</option>
                     </select>
                 </div>
+
+                <div class="form-group">
+                    <label for="image">Product Image</label>
+                    <input type="file" name="image" id="image" class="form-control">
+                    <div>
+                        <img 
+                            src="{{ $product->image ? asset('images/products/' . $product->image) : asset('images/products/item.png') }}" 
+                            alt="Profile Image" 
+                            width="100">
+                    </div>
+                </div>
+
+                <!-- <div class="form-group">
+                    <label for="image">Product Image</label>
+                    <input type="file" name="image" id="image" class="form-control">
+                    @if($product->image)
+                        <img src="{{ asset('images/products/' . $product->image) }}" alt="Profile Image" width="100" style="margin-top:10px;">
+                    @endif
+                </div> -->
 
                 <button type="submit" class="btn btn-primary">Update Product</button>
             </form>

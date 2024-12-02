@@ -45,7 +45,7 @@
                                 </div> -->
 
                                 <div class="profile-image mb-4">
-                                    <img src="{{ asset('images/users/' . $user->image) }}" 
+                                    <img src="{{ asset('images/users/' . ($user->image ? $user->image : 'item.png')) }}" 
                                          alt="Profile Image" 
                                          class="img-thumbnail" 
                                          style="width: 150px; height: 150px; object-fit: cover; border-radius: 50%;">
