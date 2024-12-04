@@ -15,6 +15,154 @@
         </div>
     </div>
 
+
+    <div class="tablecontainer">
+        <div class="tablebox">
+            <div class="item">
+                <b>Table 1</b><br>
+                Seat Capacity: 4<br>
+                Seat Occupied: 4<br>
+                <b>Status: Occupied</b> 
+            </div>
+        </div>&nbsp;&nbsp;
+        <div class="tablebox2">
+            <div class="item" style="background: #f5f93bad">
+                <b>Table 2</b><br>
+                Seat Capacity: 4<br>
+                Seat Occupied: 4<br>
+                <b>Status: Reserved</b> 
+            </div>
+        </div>&nbsp;&nbsp;
+        <div class="tablebox2">
+            <div class="item" style="background: #f5f93bad">
+                <b>Table 3</b><br>
+                Seat Capacity: 4<br>
+                Seat Occupied: 4<br>
+                <b>Status: Reserved</b> 
+            </div>
+        </div>&nbsp;&nbsp;
+        <div class="tablebox3">
+            <div class="item" style="background: #93cc66ad;">
+                <b>Table 4</b><br>
+                Seat Capacity: 4<br>
+                Seat Occupied: 0<br>
+                <b>Status: Available</b> 
+            </div>
+        </div>&nbsp;&nbsp;
+        <div class="tablebox">
+            <div class="item">
+                <b>Table 5</b><br>
+                Seat Capacity: 4<br>
+                Seat Occupied: 3<br>
+                <b>Status: Occupied</b> 
+            </div>
+        </div>&nbsp;&nbsp;
+        <div class="tablebox3">
+            <div class="item" style="background: #93cc66ad;">
+                <b>Table 6</b><br>
+                Seat Capacity: 4<br>
+                Seat Occupied: 0<br>
+                <b>Status: Available</b> 
+            </div>
+        </div>&nbsp;&nbsp;
+        <div class="tablebox">
+            <div class="item">
+                <b>Table 1</b><br>
+                Seat Capacity: 4<br>
+                Seat Occupied: 4<br>
+                <b>Status: Occupied</b> 
+            </div>
+        </div>&nbsp;&nbsp;
+        <div class="tablebox2">
+            <div class="item" style="background: #f5f93bad;">
+                <b>Table 2</b><br>
+                Seat Capacity: 4<br>
+                Seat Occupied: 4<br>
+                <b>Status: Reserved</b> 
+            </div>
+        </div>&nbsp;&nbsp;
+        <div class="tablebox2">
+            <div class="item" style="background: #f5f93bad;">
+                <b>Table 3</b><br>
+                Seat Capacity: 4<br>
+                Seat Occupied: 4<br>
+                <b>Status: Reserved</b> 
+            </div>
+        </div>&nbsp;&nbsp;
+        <div class="tablebox3">
+            <div class="item" style="background: #93cc66ad;">
+                <b>Table 4</b><br>
+                Seat Capacity: 4<br>
+                Seat Occupied: 0<br>
+                <b>Status: Available</b> 
+            </div>
+        </div>&nbsp;&nbsp;
+        <div class="tablebox">
+            <div class="item">
+                <b>Table 5</b><br>
+                Seat Capacity: 4<br>
+                Seat Occupied: 3<br>
+                <b>Status: Occupied</b> 
+            </div>
+        </div>&nbsp;&nbsp;
+        <div class="tablebox3">
+            <div class="item" style="background: #93cc66ad;">
+                <b>Table 6</b><br>
+                Seat Capacity: 4<br>
+                Seat Occupied: 0<br>
+                <b>Status: Available</b> 
+            </div>
+        </div>&nbsp;&nbsp;
+        <div class="tablebox">
+            <div class="item">
+                <b>Table 1</b><br>
+                Seat Capacity: 4<br>
+                Seat Occupied: 4<br>
+                <b>Status: Occupied</b> 
+            </div>
+        </div>&nbsp;&nbsp;
+        <div class="tablebox2">
+            <div class="item" style="background: #f5f93bad">
+                <b>Table 2</b><br>
+                Seat Capacity: 4<br>
+                Seat Occupied: 4<br>
+                <b>Status: Reserved</b> 
+            </div>
+        </div>&nbsp;&nbsp;
+        <div class="tablebox2">
+            <div class="item" style="background: #f5f93bad">
+                <b>Table 3</b><br>
+                Seat Capacity: 4<br>
+                Seat Occupied: 4<br>
+                <b>Status: Reserved</b> 
+            </div>
+        </div>&nbsp;&nbsp;
+        <div class="tablebox3">
+            <div class="item" style="background: #93cc66ad;">
+                <b>Table 4</b><br>
+                Seat Capacity: 4<br>
+                Seat Occupied: 0<br>
+                <b>Status: Available</b> 
+            </div>
+        </div>&nbsp;&nbsp;
+        <div class="tablebox">
+            <div class="item">
+                <b>Table 5</b><br>
+                Seat Capacity: 4<br>
+                Seat Occupied: 3<br>
+                <b>Status: Occupied</b> 
+            </div>
+        </div>&nbsp;&nbsp;
+        <div class="tablebox3">
+            <div class="item" style="background: #93cc66ad;">
+                <b>Table 6</b><br>
+                Seat Capacity: 4<br>
+                Seat Occupied: 0<br>
+                <b>Status: Available</b> 
+            </div>
+        </div>&nbsp;&nbsp;
+    </div>
+
     <section class="content" style="background-color:#fff;padding:20px;">
         <div class="container-fluid">
             @if(session('success'))
@@ -59,6 +207,57 @@
         </div>
     </section>
 </div>
+
+<style>
+
+.tablecontainer {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  padding: 10px;
+}
+
+@media screen and (min-width: 768px) {
+  .tablecontainer {
+    flex-direction: row;
+  }
+}
+
+.tablebox {
+    background: #ff0000ad;
+    color: white;
+    padding: 1px;
+    border-radius: 12px;
+}
+
+.tablebox2 {
+    background: #ffca00;
+    padding: 1px;
+    border-radius: 12px;
+}
+
+.tablebox3 {
+    background: #adf177ad;
+    padding: 1px;
+    border-radius: 12px;
+}
+
+.item {
+  background: #cc6666ad;
+  border-radius: 32px;
+  padding: 15px;
+  margin: 10px;
+  min-width: 15%;
+  flex-grow: 1;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+}
+.item:hover {
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.19), 0 26px 26px rgba(0, 0, 0, 0.23);
+}
+
+</style>
+
 @endsection
 
 @push('masterScripts')
