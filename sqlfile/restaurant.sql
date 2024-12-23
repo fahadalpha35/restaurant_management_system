@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Dec 22, 2024 at 09:58 AM
+-- Generation Time: Dec 23, 2024 at 10:38 AM
 -- Server version: 8.0.30
 -- PHP Version: 8.3.4
 
@@ -20,6 +20,19 @@ SET time_zone = "+00:00";
 --
 -- Database: `restaurant`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `branch`
+--
+
+CREATE TABLE `branch` (
+  `id` int NOT NULL,
+  `name` varchar(1000) COLLATE utf8mb4_general_ci NOT NULL,
+  `company_id` int NOT NULL,
+  `active` int NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -57,16 +70,17 @@ CREATE TABLE `category` (
   `description` text COLLATE utf8mb4_general_ci,
   `active` int NOT NULL,
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `company_id` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `category`
 --
 
-INSERT INTO `category` (`id`, `name`, `description`, `active`, `created_at`, `updated_at`) VALUES
-(1, 'Drinks', 'drinks', 1, '2024-11-23 23:08:16', '2024-11-24 01:00:30'),
-(3, 'Rice', 'rice', 1, '2024-11-24 03:53:17', '2024-11-24 03:53:17');
+INSERT INTO `category` (`id`, `name`, `description`, `active`, `created_at`, `updated_at`, `company_id`) VALUES
+(1, 'Drinks', 'drinks', 1, '2024-11-23 23:08:16', '2024-11-24 01:00:30', 0),
+(3, 'Rice', 'rice', 1, '2024-11-24 03:53:17', '2024-11-24 03:53:17', 0);
 
 -- --------------------------------------------------------
 
@@ -236,35 +250,38 @@ CREATE TABLE `orders` (
   `user_id` int NOT NULL,
   `table_id` int NOT NULL,
   `paid_status` int NOT NULL,
-  `store_id` int NOT NULL
+  `store_id` int NOT NULL,
+  `branch_id` int NOT NULL,
+  `order_status` varchar(1000) NOT NULL,
+  `company_id` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
 --
 -- Dumping data for table `orders`
 --
 
-INSERT INTO `orders` (`id`, `bill_no`, `date_time`, `gross_amount`, `service_charge_rate`, `service_charge_amount`, `vat_charge_rate`, `vat_charge_amount`, `discount`, `net_amount`, `user_id`, `table_id`, `paid_status`, `store_id`) VALUES
-(2, 'ORD-674BF49A2ABF1', '2024-12-01 05:31:06', '20', '10', '2', '15', '3', '0', '25', 2, 1, 0, 1),
-(3, 'ORD-674BFB090E91A', '2024-12-01 05:58:33', '20', '10', '2', '15', '3', '0', '25', 2, 2, 0, 1),
-(4, 'ORD-674BFBDBC248E', '2024-12-01 06:02:03', '20', '10', '2', '15', '3', '0', '25', 2, 2, 0, 1),
-(5, 'ORD-674BFD93089EA', '2024-12-01 06:09:23', '20', '10', '2', '15', '3', '0', '25', 2, 1, 1, 1),
-(6, 'ORD-674BFDF57B497', '2024-12-01 06:11:01', '20', '10', '2', '15', '3', '0', '25', 2, 1, 0, 1),
-(7, 'ORD-674BFEAF401B2', '2024-12-01 06:14:07', '20', '10', '2', '15', '3', '0', '25', 2, 4, 0, 1),
-(8, 'ORD-674BFFF117D80', '2024-12-01 06:19:29', '80', '10', '8', '15', '12', '0', '100', 2, 2, 0, 1),
-(9, 'ORD-674C030B7EBB4', '2024-12-01 06:32:43', '20', '10', '2', '15', '3', '0', '25', 2, 1, 0, 1),
-(10, 'ORD-674C046BA981E', '2024-12-01 06:38:35', '40', '10', '4', '15', '6', '0', '50', 2, 1, 0, 1),
-(11, 'ORD-674C2EAF439DE', '2024-12-01 09:38:55', '60', '10', '6', '15', '9', '0', '75', 2, 1, 0, 1),
-(12, 'ORD-674C31F7842C6', '2024-12-01 09:52:55', '20', '10', '2', '15', '3', '0', '25', 2, 1, 0, 1),
-(13, 'ORD-674C32116E4BB', '2024-12-01 09:53:21', '20', '10', '2', '15', '3', '0', '25', 2, 1, 0, 1),
-(14, 'ORD-674C32260F8D5', '2024-12-01 09:53:42', '20', '10', '2', '15', '3', '0', '25', 2, 1, 0, 1),
-(15, 'ORD-674C3246AFBF6', '2024-12-01 09:54:14', '20', '10', '2', '15', '3', '0', '25', 2, 1, 0, 1),
-(16, 'ORD-674C329E3EC9C', '2024-12-01 09:55:42', '120', '10', '12', '15', '18', '0', '150', 2, 1, 0, 1),
-(17, 'ORD-674D436136B44', '2024-12-02 05:19:29', '20', '10', '2', '15', '3', '0', '25', 2, 1, 0, 1),
-(18, 'ORD-674D438409212', '2024-12-02 05:20:04', '20', '10', '2', '15', '3', '0', '25', 2, 1, 0, 1),
-(19, 'ORD-674D439D33A90', '2024-12-02 05:20:29', '120', '10', '12', '15', '18', '0', '150', 2, 1, 0, 1),
-(20, 'ORD-674D43C0C8245', '2024-12-02 05:21:04', '140', '10', '14', '15', '21', '75', '100', 2, 1, 0, 1),
-(21, 'ORD-674D89BE5A7C2', '2024-12-02 10:19:42', '80', '10', '8', '15', '12', '0', '100', 2, 1, 0, 1),
-(22, 'ORD-674D99408C135', '2024-12-02 11:25:52', '20', '10', '2', '15', '3', '0', '25', 2, 1, 0, 1);
+INSERT INTO `orders` (`id`, `bill_no`, `date_time`, `gross_amount`, `service_charge_rate`, `service_charge_amount`, `vat_charge_rate`, `vat_charge_amount`, `discount`, `net_amount`, `user_id`, `table_id`, `paid_status`, `store_id`, `branch_id`, `order_status`, `company_id`) VALUES
+(2, 'ORD-674BF49A2ABF1', '2024-12-01 05:31:06', '20', '10', '2', '15', '3', '0', '25', 2, 1, 0, 1, 0, '', 0),
+(3, 'ORD-674BFB090E91A', '2024-12-01 05:58:33', '20', '10', '2', '15', '3', '0', '25', 2, 2, 0, 1, 0, '', 0),
+(4, 'ORD-674BFBDBC248E', '2024-12-01 06:02:03', '20', '10', '2', '15', '3', '0', '25', 2, 2, 0, 1, 0, '', 0),
+(5, 'ORD-674BFD93089EA', '2024-12-01 06:09:23', '20', '10', '2', '15', '3', '0', '25', 2, 1, 1, 1, 0, '', 0),
+(6, 'ORD-674BFDF57B497', '2024-12-01 06:11:01', '20', '10', '2', '15', '3', '0', '25', 2, 1, 0, 1, 0, '', 0),
+(7, 'ORD-674BFEAF401B2', '2024-12-01 06:14:07', '20', '10', '2', '15', '3', '0', '25', 2, 4, 0, 1, 0, '', 0),
+(8, 'ORD-674BFFF117D80', '2024-12-01 06:19:29', '80', '10', '8', '15', '12', '0', '100', 2, 2, 0, 1, 0, '', 0),
+(9, 'ORD-674C030B7EBB4', '2024-12-01 06:32:43', '20', '10', '2', '15', '3', '0', '25', 2, 1, 0, 1, 0, '', 0),
+(10, 'ORD-674C046BA981E', '2024-12-01 06:38:35', '40', '10', '4', '15', '6', '0', '50', 2, 1, 0, 1, 0, '', 0),
+(11, 'ORD-674C2EAF439DE', '2024-12-01 09:38:55', '60', '10', '6', '15', '9', '0', '75', 2, 1, 0, 1, 0, '', 0),
+(12, 'ORD-674C31F7842C6', '2024-12-01 09:52:55', '20', '10', '2', '15', '3', '0', '25', 2, 1, 0, 1, 0, '', 0),
+(13, 'ORD-674C32116E4BB', '2024-12-01 09:53:21', '20', '10', '2', '15', '3', '0', '25', 2, 1, 0, 1, 0, '', 0),
+(14, 'ORD-674C32260F8D5', '2024-12-01 09:53:42', '20', '10', '2', '15', '3', '0', '25', 2, 1, 0, 1, 0, '', 0),
+(15, 'ORD-674C3246AFBF6', '2024-12-01 09:54:14', '20', '10', '2', '15', '3', '0', '25', 2, 1, 0, 1, 0, '', 0),
+(16, 'ORD-674C329E3EC9C', '2024-12-01 09:55:42', '120', '10', '12', '15', '18', '0', '150', 2, 1, 0, 1, 0, '', 0),
+(17, 'ORD-674D436136B44', '2024-12-02 05:19:29', '20', '10', '2', '15', '3', '0', '25', 2, 1, 0, 1, 0, '', 0),
+(18, 'ORD-674D438409212', '2024-12-02 05:20:04', '20', '10', '2', '15', '3', '0', '25', 2, 1, 0, 1, 0, '', 0),
+(19, 'ORD-674D439D33A90', '2024-12-02 05:20:29', '120', '10', '12', '15', '18', '0', '150', 2, 1, 0, 1, 0, '', 0),
+(20, 'ORD-674D43C0C8245', '2024-12-02 05:21:04', '140', '10', '14', '15', '21', '75', '100', 2, 1, 0, 1, 0, '', 0),
+(21, 'ORD-674D89BE5A7C2', '2024-12-02 10:19:42', '80', '10', '8', '15', '12', '0', '100', 2, 1, 0, 1, 0, '', 0),
+(22, 'ORD-674D99408C135', '2024-12-02 11:25:52', '20', '10', '2', '15', '3', '0', '25', 2, 1, 0, 1, 0, '', 0);
 
 -- --------------------------------------------------------
 
@@ -278,35 +295,36 @@ CREATE TABLE `order_items` (
   `product_id` int NOT NULL,
   `qty` varchar(255) NOT NULL,
   `rate` varchar(255) NOT NULL,
-  `amount` varchar(255) NOT NULL
+  `amount` varchar(255) NOT NULL,
+  `company_id` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
 --
 -- Dumping data for table `order_items`
 --
 
-INSERT INTO `order_items` (`id`, `order_id`, `product_id`, `qty`, `rate`, `amount`) VALUES
-(1, 2, 1, '1', '20', '20.00'),
-(2, 3, 2, '1', '20', '20.00'),
-(3, 4, 1, '1', '20', '20.00'),
-(4, 5, 1, '1', '20', '20.00'),
-(5, 6, 2, '1', '20', '20.00'),
-(6, 7, 2, '1', '20', '20.00'),
-(7, 8, 2, '4', '20', '80.00'),
-(8, 9, 1, '1', '20', '20.00'),
-(9, 10, 1, '2', '20', '40.00'),
-(10, 11, 1, '3', '20', '60.00'),
-(11, 12, 6, '1', '20', '20.00'),
-(12, 13, 6, '1', '20', '20.00'),
-(13, 14, 6, '1', '20', '20.00'),
-(14, 15, 4, '1', '20', '20.00'),
-(15, 16, 1, '6', '20', '120.00'),
-(16, 17, 4, '1', '20', '20.00'),
-(17, 18, 6, '1', '20', '20.00'),
-(18, 19, 1, '6', '20', '120.00'),
-(19, 20, 1, '7', '20', '140.00'),
-(20, 21, 2, '4', '20', '80.00'),
-(21, 22, 2, '1', '20', '20.00');
+INSERT INTO `order_items` (`id`, `order_id`, `product_id`, `qty`, `rate`, `amount`, `company_id`) VALUES
+(1, 2, 1, '1', '20', '20.00', 0),
+(2, 3, 2, '1', '20', '20.00', 0),
+(3, 4, 1, '1', '20', '20.00', 0),
+(4, 5, 1, '1', '20', '20.00', 0),
+(5, 6, 2, '1', '20', '20.00', 0),
+(6, 7, 2, '1', '20', '20.00', 0),
+(7, 8, 2, '4', '20', '80.00', 0),
+(8, 9, 1, '1', '20', '20.00', 0),
+(9, 10, 1, '2', '20', '40.00', 0),
+(10, 11, 1, '3', '20', '60.00', 0),
+(11, 12, 6, '1', '20', '20.00', 0),
+(12, 13, 6, '1', '20', '20.00', 0),
+(13, 14, 6, '1', '20', '20.00', 0),
+(14, 15, 4, '1', '20', '20.00', 0),
+(15, 16, 1, '6', '20', '120.00', 0),
+(16, 17, 4, '1', '20', '20.00', 0),
+(17, 18, 6, '1', '20', '20.00', 0),
+(18, 19, 1, '6', '20', '120.00', 0),
+(19, 20, 1, '7', '20', '140.00', 0),
+(20, 21, 2, '4', '20', '80.00', 0),
+(21, 22, 2, '1', '20', '20.00', 0);
 
 -- --------------------------------------------------------
 
@@ -358,7 +376,9 @@ INSERT INTO `personal_access_tokens` (`id`, `tokenable_type`, `tokenable_id`, `n
 (59, 'App\\Models\\User', 2, 'ORMS', 'fb865b47a3b030b5fc95967e4cf61d43c61e94ee5731b0b07c264070a7397612', '[\"*\"]', NULL, NULL, '2024-12-10 23:36:16', '2024-12-10 23:36:16'),
 (60, 'App\\Models\\User', 2, 'ORMS', '4992e62577f304f6ebf20f255464105b18da243add2d643eca12c451a7852507', '[\"*\"]', NULL, NULL, '2024-12-11 23:51:40', '2024-12-11 23:51:40'),
 (61, 'App\\Models\\User', 2, 'ORMS', '8619073ec4493fa8e2f1d2b85fa378ea2d75cce940ed56883af10998a6115f54', '[\"*\"]', NULL, NULL, '2024-12-21 23:46:08', '2024-12-21 23:46:08'),
-(62, 'App\\Models\\User', 2, 'ORMS', 'f3465820ad74b2b123538031d0dac43e1e7f1d70554202a462e1078d08d0c744', '[\"*\"]', NULL, NULL, '2024-12-22 03:43:38', '2024-12-22 03:43:38');
+(62, 'App\\Models\\User', 2, 'ORMS', 'f3465820ad74b2b123538031d0dac43e1e7f1d70554202a462e1078d08d0c744', '[\"*\"]', NULL, NULL, '2024-12-22 03:43:38', '2024-12-22 03:43:38'),
+(63, 'App\\Models\\User', 2, 'ORMS', '9b91d941c25c32567088f3be91bce03c2e8b9bff2d9745478e920bfd7ce9cb11', '[\"*\"]', NULL, NULL, '2024-12-22 07:00:24', '2024-12-22 07:00:24'),
+(64, 'App\\Models\\User', 2, 'ORMS', '87fec3354b25a53b197fb9ef912bffa7ea25ea7b5a6a57bb1ea4730f5a66646e', '[\"*\"]', NULL, NULL, '2024-12-23 03:55:51', '2024-12-23 03:55:51');
 
 -- --------------------------------------------------------
 
@@ -375,21 +395,22 @@ CREATE TABLE `products` (
   `price` varchar(255) NOT NULL,
   `description` text NOT NULL,
   `image` text NOT NULL,
-  `active` int NOT NULL
+  `active` int NOT NULL,
+  `company_id` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
 --
 -- Dumping data for table `products`
 --
 
-INSERT INTO `products` (`id`, `category_id`, `subcategory_id`, `store_id`, `name`, `price`, `description`, `image`, `active`) VALUES
-(1, 1, 1, 1, 'Pepsi', '20', 'test', '1733044745_About-Us.png', 1),
-(2, 1, 1, 8, '7 Up', '332', 'dfgdf', '', 1),
-(4, 3, 4, 1, 'Chicken Fried Rice', '43', 'fhdhgdf', '', 1),
-(6, 1, 1, 1, 'Coca Cola', '234324', 'test', '1733043720_og.png', 1),
-(7, 1, 1, 1, 'Frutika', '4354', 'fghh', '1733048468_res.png', 1),
-(8, 3, 4, 1, 'Yellow Rice', '453', 'fgdf', 'item.png', 1),
-(9, 1, 1, 1, 'Merinda', '3434', 'fghfgh', 'item.png', 1);
+INSERT INTO `products` (`id`, `category_id`, `subcategory_id`, `store_id`, `name`, `price`, `description`, `image`, `active`, `company_id`) VALUES
+(1, 1, 1, 1, 'Pepsi', '20', 'test', '1733044745_About-Us.png', 1, 0),
+(2, 1, 1, 8, '7 Up', '332', 'dfgdf', '', 1, 0),
+(4, 3, 4, 1, 'Chicken Fried Rice', '43', 'fhdhgdf', '', 1, 0),
+(6, 1, 1, 1, 'Coca Cola', '234324', 'test', '1733043720_og.png', 1, 0),
+(7, 1, 1, 1, 'Frutika', '4354', 'fghh', '1733048468_res.png', 1, 0),
+(8, 3, 4, 1, 'Yellow Rice', '453', 'fgdf', 'item.png', 1, 0),
+(9, 1, 1, 1, 'Merinda', '3434', 'fghfgh', 'item.png', 1, 0);
 
 -- --------------------------------------------------------
 
@@ -432,7 +453,7 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('AlDyWr2dSKZ0DV1ILtPXgUXBRGLNET94uUmg7hk1', 2, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36', 'YTo1OntzOjY6Il90b2tlbiI7czo0MDoiQ3N5cXNTRHp5cFczcFBTQTNaREZTMk04VUlnQ0llR2ZIUTgzSzFQNCI7czozOiJ1cmwiO2E6MTp7czo4OiJpbnRlbmRlZCI7czo0NzoiaHR0cDovL3Jlc3RhdXJhbnRfbWFuYWdlbWVudF9zeXN0ZW0udGVzdC9zdG9yZXMiO31zOjk6Il9wcmV2aW91cyI7YToxOntzOjM6InVybCI7czo0NzoiaHR0cDovL3Jlc3RhdXJhbnRfbWFuYWdlbWVudF9zeXN0ZW0udGVzdC90YWJsZXMiO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX1zOjUwOiJsb2dpbl93ZWJfNTliYTM2YWRkYzJiMmY5NDAxNTgwZjAxNGM3ZjU4ZWE0ZTMwOTg5ZCI7aToyO30=', 1734860624);
+('KDTuWkfvSIYvxm99wiT7QpZ9MxZoPML74muA81GI', 2, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36', 'YTo1OntzOjY6Il90b2tlbiI7czo0MDoieWtBeFYxaURhak1XakFFUm9NZXBXMklkQUVWVTZXb0N0OUJia1ZWdyI7czozOiJ1cmwiO2E6MTp7czo4OiJpbnRlbmRlZCI7czo1MDoiaHR0cDovL3Jlc3RhdXJhbnRfbWFuYWdlbWVudF9zeXN0ZW0udGVzdC9kYXNoYm9hcmQiO31zOjk6Il9wcmV2aW91cyI7YToxOntzOjM6InVybCI7czo0OToiaHR0cDovL3Jlc3RhdXJhbnRfbWFuYWdlbWVudF9zeXN0ZW0udGVzdC9wcm9kdWN0cyI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fXM6NTA6ImxvZ2luX3dlYl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjI7fQ==', 1734950242);
 
 -- --------------------------------------------------------
 
@@ -444,16 +465,17 @@ CREATE TABLE `stores` (
   `id` int NOT NULL,
   `name` varchar(255) NOT NULL,
   `company_id` int NOT NULL,
-  `active` int NOT NULL
+  `active` int NOT NULL,
+  `branch_id` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
 --
 -- Dumping data for table `stores`
 --
 
-INSERT INTO `stores` (`id`, `name`, `company_id`, `active`) VALUES
-(1, 'OSSL', 1, 1),
-(8, 'Test', 1, 1);
+INSERT INTO `stores` (`id`, `name`, `company_id`, `active`, `branch_id`) VALUES
+(1, 'OSSL', 1, 1, 0),
+(8, 'Test', 1, 1, 0);
 
 -- --------------------------------------------------------
 
@@ -468,16 +490,17 @@ CREATE TABLE `subcategory` (
   `description` text COLLATE utf8mb4_general_ci,
   `active` int NOT NULL,
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `company_id` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `subcategory`
 --
 
-INSERT INTO `subcategory` (`id`, `category_id`, `name`, `description`, `active`, `created_at`, `updated_at`) VALUES
-(1, 1, 'Soft Drinks', 'soft-drinks', 1, '2024-11-24 06:28:42', '2024-12-01 10:07:16'),
-(4, 3, 'Fried Rice', 'fried rice', 1, '2024-11-24 12:00:54', '2024-11-24 12:00:54');
+INSERT INTO `subcategory` (`id`, `category_id`, `name`, `description`, `active`, `created_at`, `updated_at`, `company_id`) VALUES
+(1, 1, 'Soft Drinks', 'soft-drinks', 1, '2024-11-24 06:28:42', '2024-12-01 10:07:16', 0),
+(4, 3, 'Fried Rice', 'fried rice', 1, '2024-11-24 12:00:54', '2024-11-24 12:00:54', 0);
 
 -- --------------------------------------------------------
 
@@ -491,19 +514,20 @@ CREATE TABLE `tables` (
   `capacity` varchar(255) NOT NULL,
   `available` int NOT NULL,
   `active` int NOT NULL,
-  `store_id` int NOT NULL
+  `store_id` int NOT NULL,
+  `company_id` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
 --
 -- Dumping data for table `tables`
 --
 
-INSERT INTO `tables` (`id`, `table_name`, `capacity`, `available`, `active`, `store_id`) VALUES
-(1, 'Table-1', '8', 1, 1, 1),
-(2, 'Table-2', '4', 4, 1, 1),
-(3, 'Table-3', '2', 2, 1, 1),
-(4, 'Table-4', '3', 3, 1, 1),
-(7, 'Table-5', '4', 4, 1, 1);
+INSERT INTO `tables` (`id`, `table_name`, `capacity`, `available`, `active`, `store_id`, `company_id`) VALUES
+(1, 'Table-1', '8', 1, 1, 1, 0),
+(2, 'Table-2', '4', 4, 1, 1, 0),
+(3, 'Table-3', '2', 2, 1, 1, 0),
+(4, 'Table-4', '3', 3, 1, 1, 0),
+(7, 'Table-5', '4', 4, 1, 1, 0);
 
 -- --------------------------------------------------------
 
@@ -559,6 +583,12 @@ INSERT INTO `user_roles` (`id`, `user_id`, `role_id`) VALUES
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `branch`
+--
+ALTER TABLE `branch`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `cache`
@@ -714,6 +744,12 @@ ALTER TABLE `user_roles`
 --
 
 --
+-- AUTO_INCREMENT for table `branch`
+--
+ALTER TABLE `branch`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `category`
 --
 ALTER TABLE `category`
@@ -765,7 +801,7 @@ ALTER TABLE `order_items`
 -- AUTO_INCREMENT for table `personal_access_tokens`
 --
 ALTER TABLE `personal_access_tokens`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=63;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=65;
 
 --
 -- AUTO_INCREMENT for table `products`
