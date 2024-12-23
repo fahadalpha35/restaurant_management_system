@@ -72,7 +72,7 @@
 
         <!-- Flores -->
         <li class="nav-item">
-          <a href="" class="nav-link {{ Request::is('branches') ? 'active' : '' }}">
+          <a href="{{ route('branches.index') }}" class="nav-link {{ Request::is('branches') ? 'active' : '' }}">
             <i class="nav-icon fa fa-building"></i>
             <p>Branches</p>
           </a>

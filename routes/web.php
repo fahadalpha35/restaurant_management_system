@@ -17,6 +17,7 @@ use App\Http\Controllers\UsersController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\SidebarController;
+use App\Http\Controllers\BranchController;
 
 Route::get('register', [AuthController::class, 'showRegisterForm']);
 Route::post('register', [AuthController::class, 'register'])->name('register');
@@ -32,6 +33,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
+    Route::resource('branches', BranchController::class);
     Route::resource('stores', StoresController::class);
     // Route::resource('stores', 'StoresController');
     // Route::get('stores/fetchStores', [StoresController::class, 'fetchStores'])->name('stores.fetchStores');
