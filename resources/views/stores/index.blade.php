@@ -6,10 +6,10 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Stores</h1>
+                    <h1 class="m-0">Floors</h1>
                 </div>
                 <div class="col-sm-6">
-                    <a href="{{ route('stores.create')}}" class="btn btn-success float-sm-right">Add New Store</a>
+                    <a href="{{ route('stores.create')}}" class="btn btn-success float-sm-right">Add New Floor</a>
                 </div>
             </div>
         </div>

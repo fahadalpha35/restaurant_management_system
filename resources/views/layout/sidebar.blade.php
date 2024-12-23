@@ -69,12 +69,20 @@
             </li>
           </ul>
         </li>
+
+        <!-- Flores -->
+        <li class="nav-item">
+          <a href="" class="nav-link {{ Request::is('branches') ? 'active' : '' }}">
+            <i class="nav-icon fa fa-building"></i>
+            <p>Branches</p>
+          </a>
+        </li>
         
-        <!-- Stores -->
+        <!-- Flores -->
         <li class="nav-item">
           <a href="{{ route('stores.index') }}" class="nav-link {{ Request::is('stores') ? 'active' : '' }}">
             <i class="nav-icon fas fa-store"></i>
-            <p>Stores</p>
+            <p>Floors</p>
           </a>
         </li>
         
@@ -172,7 +180,7 @@
         <!-- Company Info -->
         <li class="nav-item">
           <a href="{{ route('edit_company', ['id' =>  Auth::user()->company_id ]) }}" class="nav-link {{ Request::is('edit_company*') ? 'active' : '' }}">
-            <i class="nav-icon fas fa-building"></i>
+            <i class="nav-icon fas fa fa-institution"></i>
             <p>Company Info</p>
           </a>
         </li>

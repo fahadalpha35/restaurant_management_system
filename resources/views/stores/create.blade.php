@@ -11,12 +11,12 @@
         <!-- Back Button -->
         <!-- <a href="{{ url()->previous() }}" class="btn btn-secondary">Back</a><br><br><br> -->
         <a href="{{route('stores.index')}}" class="btn btn-secondary" style="background-color:#17a2b8;">Back</a><br><br><br>
-          <h1 class="m-0">Create Store</h1>
+          <h1 class="m-0">Create Floor</h1>
         </div><!-- /.col -->
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
             <li class="breadcrumb-item"><a href="#">Home</a></li>
-            <li class="breadcrumb-item active">Create Store</li>
+            <li class="breadcrumb-item active">Create Floor</li>
           </ol>
         </div><!-- /.col -->
       </div><!-- /.row -->
@@ -32,7 +32,7 @@
       <form action="{{ route('stores.store') }}" method="POST">
         @csrf
         <div class="form-group">
-          <label for="name">Store Name</label>
+          <label for="name">Floor Name</label>
           <input type="text" class="form-control" name="name" id="name" required>
         </div>
         <div class="form-group">

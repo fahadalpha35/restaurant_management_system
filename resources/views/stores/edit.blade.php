@@ -8,7 +8,7 @@
                 <div class="col-sm-6">
                     <!-- Back Button -->
                     <a href="{{route('stores.index')}}" class="btn btn-secondary" style="background-color:#17a2b8;">Back</a><br><br>
-                    <h1 class="m-0">Edit Store</h1>
+                    <h1 class="m-0">Edit Floor</h1>
                 </div>
             </div>
         </div>
@@ -20,7 +20,7 @@
                 @csrf
                 @method('PUT')
                 <div class="form-group">
-                    <label for="name">Store Name</label>
+                    <label for="name">Floor Name</label>
                     <input type="text" class="form-control" name="name" id="name" value="{{ $store->name }}" required>
                 </div>
                 <div class="form-group">
