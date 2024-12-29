@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Auth;
 
 class StoresController extends Controller
 {
@@ -12,10 +13,14 @@ class StoresController extends Controller
      */
     public function index()
     {
+        $user_company_id = Auth::user()->company_id;
+
         // Fetch all tables with their associated store names
         $stores = DB::table('stores')
             ->leftjoin('company', 'stores.company_id', '=', 'company.id')
-            ->select('stores.*', 'company.company_name as company_name')
+            ->leftjoin('branch', 'stores.branch_id', '=', 'branch.id')
+            ->select('stores.*', 'company.company_name as company_name', 'branch.name as branch_name')
+            ->where('stores.company_id',$user_company_id)
             ->get();
         
         return view('stores.index', compact('stores'));
@@ -29,9 +34,21 @@ class StoresController extends Controller
      */
     public function create()
     {
-        
-        $company = DB::table('company')->first();
-        return view('stores.create', compact('company'));
+        $user_company_id = Auth::user()->company_id;
+
+        // Fetch the logged-in user's company details
+        $companies = DB::table('company')
+            ->where('id', $user_company_id)
+            ->first();
+
+        $user_company_name = $companies ? $companies->company_name : null;
+
+        // Fetch branches related to the logged-in user's company_id
+        $branches = DB::table('branch')
+            ->where('company_id', $user_company_id) // Filter by company_id
+            ->get();
+
+        return view('stores.create', compact('companies', 'branches', 'user_company_name'));
     }
 
     /**
@@ -39,17 +56,18 @@ class StoresController extends Controller
      */
     public function store(Request $request)
     {
+        $user_company_id = Auth::user()->company_id;
         $request->validate([
             'name' => 'required|string|max:255',
             'active' => 'required|boolean',
-            'company_id' => 'required|integer|exists:company,id',
+            'branch_id' => 'required|integer|exists:branch,id',
         ]);
 
-        // Insert a new store using DB facade
         DB::table('stores')->insert([
             'name' => $request->name,
             'active' => $request->active,
-            'company_id' => $request->company_id,
+            'company_id' => $user_company_id,
+            'branch_id' => $request->branch_id,
         ]);
 
         return redirect()->route('stores.index')->with('success', 'Store created successfully.');
@@ -60,14 +78,32 @@ class StoresController extends Controller
      */
     public function edit($id)
     {
-        $companies = DB::table('company')->get();
+        $user_company_id = Auth::user()->company_id;
 
+        // Fetch the logged-in user's company details
+        $companies = DB::table('company')
+            ->where('id', $user_company_id)
+            ->first();
+
+        $user_company_name = $companies ? $companies->company_name : null;
+
+        // Fetch all branches for the user's company
+        $branches = DB::table('branch')
+            ->where('company_id', $user_company_id)
+            ->get();
+
+        // Fetch the store details from the `stores` table
         $store = DB::table('stores')
-                    ->where('id', $id)
-                    ->first();
+            ->where('id', $id)
+            ->where('company_id', $user_company_id) // Ensure it belongs to the user's company
+            ->select('id', 'name', 'branch_id', 'active') // Ensure `branch_id` is selected
+            ->first();
 
-      
-        return view('stores.edit', compact('store','companies'));
+        if (!$store) {
+            return redirect()->route('stores.index')->with('error', 'Store not found or unauthorized access.');
+        }
+
+        return view('stores.edit', compact('store', 'branches', 'user_company_name'));
     }
 
     /**
@@ -75,17 +111,21 @@ class StoresController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $user_company_id = Auth::user()->company_id;
+        
+        // Validate the incoming request
         $request->validate([
             'name' => 'required|string|max:255',
+            'branch_id' => 'required|exists:branch,id', // Validate branch_id
             'active' => 'required|boolean',
-            'company_id' => 'required|integer|exists:company,id'
         ]);
 
         // Update store using DB facade
         DB::table('stores')->where('id', $id)->update([
             'name' => $request->name,
+            'branch_id' => $request->branch_id, // Ensure branch_id is updated
             'active' => $request->active,
-            'company_id' => $request->company_id
+            'company_id' => $user_company_id
         ]);
 
         return redirect()->route('stores.index')->with('success', 'Store updated successfully.');

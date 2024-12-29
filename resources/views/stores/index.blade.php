@@ -25,18 +25,21 @@
                     <tr>
                         <th>ID</th>
                         <th>Name</th>
-                        <th>Status</th>
+                        <th>Branch</th>
                         <th>Company</th>
+                        <th>Status</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
+                    @php $i =1 @endphp
                     @foreach($stores as $store)
                         <tr>
-                            <td>{{ $store->id }}</td>
+                            <td>{{ $i++ }}</td>
                             <td>{{ $store->name }}</td>
-                            <td>{{ $store->active ? 'Active' : 'Inactive' }}</td>
+                            <td>{{ $store->branch_name }}</td>
                             <td>{{ $store->company_name }}</td>
+                            <td>{{ $store->active ? 'Active' : 'Inactive' }}</td>
                             <td>
                                 <a href="{{ route('stores.edit', $store->id) }}" class="btn btn-primary">Edit</a>
                                 <form action="{{ route('stores.destroy', $store->id) }}" method="POST" style="display:inline;">

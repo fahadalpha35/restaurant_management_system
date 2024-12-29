@@ -13,10 +13,12 @@ class OrdersController extends Controller
      */
     public function index()
     {
+        $user_company_id = Auth::user()->company_id;
         $orders = DB::table('orders')
             ->join('stores', 'stores.id', '=', 'orders.store_id')
             ->select('orders.*', 'stores.name as store_name')
             ->orderBy('orders.id', 'desc')
+            ->where('orders.company_id', $user_company_id)
             ->get();
         return view('orders.index', compact('orders'));
     }
@@ -26,9 +28,13 @@ class OrdersController extends Controller
      */
     public function create()
     {
-        $tables = DB::table('tables')->get();
-        $products = DB::table('products')->get();
-        $orders = DB::table('orders')->get();
+        $user_company_id = Auth::user()->company_id;
+        $tables = DB::table('tables')
+        ->where('tables.company_id', $user_company_id)->get();
+        $products = DB::table('products')
+        ->where('products.company_id', $user_company_id)->get();
+        $orders = DB::table('orders')
+        ->where('orders.company_id', $user_company_id)->get();
         return view('orders.create', compact('tables', 'products', 'orders'));
     }
 
@@ -37,6 +43,7 @@ class OrdersController extends Controller
      */
     public function store(Request $request)
     {
+        $user_company_id = Auth::user()->company_id;
         $request->validate([
             'table' => 'required|exists:tables,id',
             'products' => 'required|array|min:1',
@@ -70,6 +77,9 @@ class OrdersController extends Controller
             'table_id' => $request->table,
             'paid_status' =>  $request->paid_status,
             'store_id' => 1,
+            'company_id' => $user_company_id,
+            'branch_id' => 1,
+            'order_status' => 1
         ];
 
         $orderId = DB::table('orders')->insertGetId($orderData);

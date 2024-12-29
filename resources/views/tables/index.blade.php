@@ -178,20 +178,23 @@
                         <th>Table Name</th>
                         <th>Capacity</th>
                         <th>Available</th>
+                        <th>Floor</th>
+                        <th>Branch</th>
                         <th>Active</th>
-                        <th>Store</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
+                    @php $i =1 @endphp
                     @foreach($tables as $table)
                         <tr>
-                            <td>{{ $table->id }}</td>
+                            <td>{{ $i++ }}</td>
                             <td>{{ $table->table_name }}</td>
                             <td>{{ $table->capacity }}</td>
                             <td>{{ $table->available }}</td>
-                            <td>{{ $table->active ? 'Yes' : 'No' }}</td>
                             <td>{{ $table->store_name }}</td>
+                            <td>{{ $table->branch_name }}</td>
+                            <td>{{ $table->active ? 'Yes' : 'No' }}</td>
                             <td>
                                 <a href="{{ route('tables.edit', $table->id) }}" class="btn btn-primary btn-sm">Edit</a>
                                 <form action="{{ route('tables.destroy', $table->id) }}" method="POST" style="display:inline;">

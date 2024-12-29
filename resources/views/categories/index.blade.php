@@ -39,9 +39,10 @@
                     </tr>
                 </thead>
                 <tbody>
+                    @php $i =1 @endphp
                     @foreach($categories as $category)
                     <tr>
-                        <td>{{ $category->id }}</td>
+                        <td>{{ $i++ }}</td>
                         <td>{{ $category->name }}</td>
                         <td>{{ $category->description }}</td>
                         <td>{{ $category->active ? 'Yes' : 'No' }}</td>
@@ -75,9 +76,10 @@
                     </tr>
                 </thead>
                 <tbody>
+                    @php $i =1 @endphp
                     @foreach($subcategories as $subcategory)
                     <tr>
-                        <td>{{ $subcategory->id }}</td>
+                        <td>{{ $i++ }}</td>
                         <td>{{ $subcategory->name }}</td>
                         <td>{{ $subcategory->description }}</td>
                         <td>{{ $subcategory->category_name }}</td>

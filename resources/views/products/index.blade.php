@@ -43,9 +43,10 @@
                 </tr>
             </thead>
             <tbody>
+            @php $i =1 @endphp
                 @foreach($products as $product)
                     <tr>
-                        <td>{{ $product->id }}</td>
+                        <td>{{ $i++ }}</td>
                         <td>
                             <center>
                                 <img src="{{ asset('images/products/' . ($product->image ? $product->image : 'item.png')) }}" alt="Product Image" width="50" />

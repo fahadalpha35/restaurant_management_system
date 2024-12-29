@@ -35,6 +35,7 @@
       <table id="storesTable" class="table table-bordered">
       <thead>
           <tr>
+              <th>ID</th>
               <th>Bill No.</th>
               <th>Store</th>
               <th>Date Time</th>
@@ -45,8 +46,10 @@
           </tr>
       </thead>
       <tbody>
+      @php $i =1 @endphp
           @foreach($orders as $orders)
               <tr>
+                  <td>{{ $i++ }}</td>
                   <td>{{ $orders->bill_no }}</td>
                   <td>{{ $orders->store_name }}</td>
                   <td>{{ $orders->date_time }}</td>

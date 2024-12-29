@@ -21,20 +21,29 @@
                     <input type="number" name="available" class="form-control" required>
                 </div>
                 <div class="form-group">
-                    <label for="active">Active:</label>
-                    <select name="active" class="form-control">
-                        <option value="1">Yes</option>
-                        <option value="0">No</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="store_id">Store:</label>
+                    <label for="store_id">Branch:</label>
                     <select name="store_id" class="form-control" required>
                         @foreach($stores as $store)
                             <option value="{{ $store->id }}">{{ $store->name }}</option>
                         @endforeach
                     </select>
                 </div>
+                <div class="form-group">
+                    <label for="store_id">Floor:</label>
+                    <select name="store_id" class="form-control" required>
+                        @foreach($stores as $store)
+                            <option value="{{ $store->id }}">{{ $store->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="active">Active:</label>
+                    <select name="active" class="form-control">
+                        <option value="1">Yes</option>
+                        <option value="0">No</option>
+                    </select>
+                </div>
+                
                 <button type="submit" class="btn btn-primary">Create</button>
             </form>
         </div>

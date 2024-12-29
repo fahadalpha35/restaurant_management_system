@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Dec 23, 2024 at 10:38 AM
+-- Generation Time: Dec 29, 2024 at 09:19 AM
 -- Server version: 8.0.30
 -- PHP Version: 8.3.4
 
@@ -29,10 +29,22 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `branch` (
   `id` int NOT NULL,
-  `name` varchar(1000) COLLATE utf8mb4_general_ci NOT NULL,
+  `name` varchar(1000) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `company_id` int NOT NULL,
   `active` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `branch`
+--
+
+INSERT INTO `branch` (`id`, `name`, `company_id`, `active`) VALUES
+(1, 'Gulshan', 1, 1),
+(2, 'Dhanmondi', 1, 1),
+(3, 'Banani', 1, 1),
+(6, 'Dhanmondi', 2, 1),
+(7, 'Banani', 2, 1),
+(8, 'Mirpur', 2, 1);
 
 -- --------------------------------------------------------
 
@@ -79,8 +91,9 @@ CREATE TABLE `category` (
 --
 
 INSERT INTO `category` (`id`, `name`, `description`, `active`, `created_at`, `updated_at`, `company_id`) VALUES
-(1, 'Drinks', 'drinks', 1, '2024-11-23 23:08:16', '2024-11-24 01:00:30', 0),
-(3, 'Rice', 'rice', 1, '2024-11-24 03:53:17', '2024-11-24 03:53:17', 0);
+(1, 'Drinks', 'drinks', 1, '2024-11-23 23:08:16', '2024-12-24 04:50:27', 1),
+(3, 'Rice', 'rice', 1, '2024-11-24 03:53:17', '2024-12-24 04:50:29', 1),
+(4, 'Desert', 'Desert', 1, '2024-12-29 03:07:03', '2024-12-29 03:07:03', 2);
 
 -- --------------------------------------------------------
 
@@ -106,8 +119,8 @@ CREATE TABLE `company` (
 --
 
 INSERT INTO `company` (`id`, `company_name`, `service_charge_value`, `vat_charge_value`, `address`, `phone`, `country`, `message`, `currency`, `image`) VALUES
-(1, 'Company_OSSL', '00', '15', 'Police Plaza Concord', '01790004664', 'Bangladesh', 'this is just an testing', 'BDT', '1732793731_orms.png'),
-(2, 'sgsg', 'srrdgsdfg', '124321', 'fds', '23234', 'efs', 'wegfweg', '3224', '');
+(1, 'Company_OSSL', '00', '15', 'Police Plaza Concord', '01790004664', 'Bangladesh', 'this is just a testing', 'BDT', '1732793731_orms.png'),
+(2, 'Fahad_Enterprise', '00', '15', 'Dhanmondi, Dhaka.', '01790004664', 'Bangladesh', 'this is just a testing', 'BDT', '1732793731_orms.png');
 
 -- --------------------------------------------------------
 
@@ -261,27 +274,27 @@ CREATE TABLE `orders` (
 --
 
 INSERT INTO `orders` (`id`, `bill_no`, `date_time`, `gross_amount`, `service_charge_rate`, `service_charge_amount`, `vat_charge_rate`, `vat_charge_amount`, `discount`, `net_amount`, `user_id`, `table_id`, `paid_status`, `store_id`, `branch_id`, `order_status`, `company_id`) VALUES
-(2, 'ORD-674BF49A2ABF1', '2024-12-01 05:31:06', '20', '10', '2', '15', '3', '0', '25', 2, 1, 0, 1, 0, '', 0),
-(3, 'ORD-674BFB090E91A', '2024-12-01 05:58:33', '20', '10', '2', '15', '3', '0', '25', 2, 2, 0, 1, 0, '', 0),
-(4, 'ORD-674BFBDBC248E', '2024-12-01 06:02:03', '20', '10', '2', '15', '3', '0', '25', 2, 2, 0, 1, 0, '', 0),
-(5, 'ORD-674BFD93089EA', '2024-12-01 06:09:23', '20', '10', '2', '15', '3', '0', '25', 2, 1, 1, 1, 0, '', 0),
-(6, 'ORD-674BFDF57B497', '2024-12-01 06:11:01', '20', '10', '2', '15', '3', '0', '25', 2, 1, 0, 1, 0, '', 0),
-(7, 'ORD-674BFEAF401B2', '2024-12-01 06:14:07', '20', '10', '2', '15', '3', '0', '25', 2, 4, 0, 1, 0, '', 0),
-(8, 'ORD-674BFFF117D80', '2024-12-01 06:19:29', '80', '10', '8', '15', '12', '0', '100', 2, 2, 0, 1, 0, '', 0),
-(9, 'ORD-674C030B7EBB4', '2024-12-01 06:32:43', '20', '10', '2', '15', '3', '0', '25', 2, 1, 0, 1, 0, '', 0),
-(10, 'ORD-674C046BA981E', '2024-12-01 06:38:35', '40', '10', '4', '15', '6', '0', '50', 2, 1, 0, 1, 0, '', 0),
-(11, 'ORD-674C2EAF439DE', '2024-12-01 09:38:55', '60', '10', '6', '15', '9', '0', '75', 2, 1, 0, 1, 0, '', 0),
-(12, 'ORD-674C31F7842C6', '2024-12-01 09:52:55', '20', '10', '2', '15', '3', '0', '25', 2, 1, 0, 1, 0, '', 0),
-(13, 'ORD-674C32116E4BB', '2024-12-01 09:53:21', '20', '10', '2', '15', '3', '0', '25', 2, 1, 0, 1, 0, '', 0),
-(14, 'ORD-674C32260F8D5', '2024-12-01 09:53:42', '20', '10', '2', '15', '3', '0', '25', 2, 1, 0, 1, 0, '', 0),
-(15, 'ORD-674C3246AFBF6', '2024-12-01 09:54:14', '20', '10', '2', '15', '3', '0', '25', 2, 1, 0, 1, 0, '', 0),
-(16, 'ORD-674C329E3EC9C', '2024-12-01 09:55:42', '120', '10', '12', '15', '18', '0', '150', 2, 1, 0, 1, 0, '', 0),
-(17, 'ORD-674D436136B44', '2024-12-02 05:19:29', '20', '10', '2', '15', '3', '0', '25', 2, 1, 0, 1, 0, '', 0),
-(18, 'ORD-674D438409212', '2024-12-02 05:20:04', '20', '10', '2', '15', '3', '0', '25', 2, 1, 0, 1, 0, '', 0),
-(19, 'ORD-674D439D33A90', '2024-12-02 05:20:29', '120', '10', '12', '15', '18', '0', '150', 2, 1, 0, 1, 0, '', 0),
-(20, 'ORD-674D43C0C8245', '2024-12-02 05:21:04', '140', '10', '14', '15', '21', '75', '100', 2, 1, 0, 1, 0, '', 0),
-(21, 'ORD-674D89BE5A7C2', '2024-12-02 10:19:42', '80', '10', '8', '15', '12', '0', '100', 2, 1, 0, 1, 0, '', 0),
-(22, 'ORD-674D99408C135', '2024-12-02 11:25:52', '20', '10', '2', '15', '3', '0', '25', 2, 1, 0, 1, 0, '', 0);
+(2, 'ORD-674BF49A2ABF1', '2024-12-01 05:31:06', '20', '10', '2', '15', '3', '0', '25', 2, 1, 0, 1, 1, '', 1),
+(3, 'ORD-674BFB090E91A', '2024-12-01 05:58:33', '20', '10', '2', '15', '3', '0', '25', 2, 2, 0, 1, 1, '', 1),
+(4, 'ORD-674BFBDBC248E', '2024-12-01 06:02:03', '20', '10', '2', '15', '3', '0', '25', 2, 2, 0, 1, 1, '', 1),
+(5, 'ORD-674BFD93089EA', '2024-12-01 06:09:23', '20', '10', '2', '15', '3', '0', '25', 2, 1, 1, 1, 1, '', 1),
+(6, 'ORD-674BFDF57B497', '2024-12-01 06:11:01', '20', '10', '2', '15', '3', '0', '25', 2, 1, 0, 1, 1, '', 1),
+(7, 'ORD-674BFEAF401B2', '2024-12-01 06:14:07', '20', '10', '2', '15', '3', '0', '25', 2, 4, 0, 1, 1, '', 1),
+(8, 'ORD-674BFFF117D80', '2024-12-01 06:19:29', '80', '10', '8', '15', '12', '0', '100', 2, 2, 0, 1, 1, '', 1),
+(9, 'ORD-674C030B7EBB4', '2024-12-01 06:32:43', '20', '10', '2', '15', '3', '0', '25', 2, 1, 0, 1, 1, '', 1),
+(10, 'ORD-674C046BA981E', '2024-12-01 06:38:35', '40', '10', '4', '15', '6', '0', '50', 2, 1, 0, 1, 1, '', 1),
+(11, 'ORD-674C2EAF439DE', '2024-12-01 09:38:55', '60', '10', '6', '15', '9', '0', '75', 2, 1, 0, 1, 1, '', 1),
+(12, 'ORD-674C31F7842C6', '2024-12-01 09:52:55', '20', '10', '2', '15', '3', '0', '25', 2, 1, 0, 1, 1, '', 1),
+(13, 'ORD-674C32116E4BB', '2024-12-01 09:53:21', '20', '10', '2', '15', '3', '0', '25', 2, 1, 0, 1, 1, '', 1),
+(14, 'ORD-674C32260F8D5', '2024-12-01 09:53:42', '20', '10', '2', '15', '3', '0', '25', 2, 1, 0, 1, 1, '', 1),
+(15, 'ORD-674C3246AFBF6', '2024-12-01 09:54:14', '20', '10', '2', '15', '3', '0', '25', 2, 1, 0, 1, 1, '', 1),
+(16, 'ORD-674C329E3EC9C', '2024-12-01 09:55:42', '120', '10', '12', '15', '18', '0', '150', 2, 1, 0, 1, 1, '', 1),
+(17, 'ORD-674D436136B44', '2024-12-02 05:19:29', '20', '10', '2', '15', '3', '0', '25', 2, 1, 0, 1, 1, '', 1),
+(18, 'ORD-674D438409212', '2024-12-02 05:20:04', '20', '10', '2', '15', '3', '0', '25', 2, 1, 0, 1, 1, '', 1),
+(19, 'ORD-674D439D33A90', '2024-12-02 05:20:29', '120', '10', '12', '15', '18', '0', '150', 2, 1, 0, 1, 1, '', 1),
+(20, 'ORD-674D43C0C8245', '2024-12-02 05:21:04', '140', '10', '14', '15', '21', '75', '100', 2, 1, 0, 1, 1, '', 1),
+(21, 'ORD-674D89BE5A7C2', '2024-12-02 10:19:42', '80', '10', '8', '15', '12', '0', '100', 2, 1, 0, 1, 1, '', 1),
+(22, 'ORD-674D99408C135', '2024-12-02 11:25:52', '20', '10', '2', '15', '3', '0', '25', 2, 1, 0, 1, 1, '', 1);
 
 -- --------------------------------------------------------
 
@@ -304,27 +317,27 @@ CREATE TABLE `order_items` (
 --
 
 INSERT INTO `order_items` (`id`, `order_id`, `product_id`, `qty`, `rate`, `amount`, `company_id`) VALUES
-(1, 2, 1, '1', '20', '20.00', 0),
-(2, 3, 2, '1', '20', '20.00', 0),
-(3, 4, 1, '1', '20', '20.00', 0),
-(4, 5, 1, '1', '20', '20.00', 0),
-(5, 6, 2, '1', '20', '20.00', 0),
-(6, 7, 2, '1', '20', '20.00', 0),
-(7, 8, 2, '4', '20', '80.00', 0),
-(8, 9, 1, '1', '20', '20.00', 0),
-(9, 10, 1, '2', '20', '40.00', 0),
-(10, 11, 1, '3', '20', '60.00', 0),
-(11, 12, 6, '1', '20', '20.00', 0),
-(12, 13, 6, '1', '20', '20.00', 0),
-(13, 14, 6, '1', '20', '20.00', 0),
-(14, 15, 4, '1', '20', '20.00', 0),
-(15, 16, 1, '6', '20', '120.00', 0),
-(16, 17, 4, '1', '20', '20.00', 0),
-(17, 18, 6, '1', '20', '20.00', 0),
-(18, 19, 1, '6', '20', '120.00', 0),
-(19, 20, 1, '7', '20', '140.00', 0),
-(20, 21, 2, '4', '20', '80.00', 0),
-(21, 22, 2, '1', '20', '20.00', 0);
+(1, 2, 1, '1', '20', '20.00', 1),
+(2, 3, 2, '1', '20', '20.00', 1),
+(3, 4, 1, '1', '20', '20.00', 1),
+(4, 5, 1, '1', '20', '20.00', 1),
+(5, 6, 2, '1', '20', '20.00', 1),
+(6, 7, 2, '1', '20', '20.00', 1),
+(7, 8, 2, '4', '20', '80.00', 1),
+(8, 9, 1, '1', '20', '20.00', 1),
+(9, 10, 1, '2', '20', '40.00', 1),
+(10, 11, 1, '3', '20', '60.00', 1),
+(11, 12, 6, '1', '20', '20.00', 1),
+(12, 13, 6, '1', '20', '20.00', 1),
+(13, 14, 6, '1', '20', '20.00', 1),
+(14, 15, 4, '1', '20', '20.00', 1),
+(15, 16, 1, '6', '20', '120.00', 1),
+(16, 17, 4, '1', '20', '20.00', 1),
+(17, 18, 6, '1', '20', '20.00', 1),
+(18, 19, 1, '6', '20', '120.00', 1),
+(19, 20, 1, '7', '20', '140.00', 1),
+(20, 21, 2, '4', '20', '80.00', 1),
+(21, 22, 2, '1', '20', '20.00', 1);
 
 -- --------------------------------------------------------
 
@@ -362,23 +375,7 @@ CREATE TABLE `personal_access_tokens` (
 --
 
 INSERT INTO `personal_access_tokens` (`id`, `tokenable_type`, `tokenable_id`, `name`, `token`, `abilities`, `last_used_at`, `expires_at`, `created_at`, `updated_at`) VALUES
-(16, 'App\\Models\\User', 3, 'ORMS', '883d777e38045dc381f2df171c473a7fe2c75311b4b5d3ca70877f5672f5af5c', '[\"*\"]', NULL, NULL, '2024-11-25 01:22:32', '2024-11-25 01:22:32'),
-(49, 'App\\Models\\User', 1, 'ORMS', '51c1b7d514aed8cea52a7dbf39608a31a1dbb2b0fbcd7fca9a14ea1da5d5b89e', '[\"*\"]', NULL, NULL, '2024-11-28 04:19:50', '2024-11-28 04:19:50'),
-(50, 'App\\Models\\User', 2, 'ORMS', 'ad75b8e4632928041594ea4dbc615c916ab489334d41d71aaf689abaf35b0d12', '[\"*\"]', NULL, NULL, '2024-11-30 21:48:18', '2024-11-30 21:48:18'),
-(51, 'App\\Models\\User', 2, 'ORMS', '14983e4df5ca05ac20121a930d683bc77a867267019bdfc00c1599b647d645f8', '[\"*\"]', NULL, NULL, '2024-12-01 22:32:12', '2024-12-01 22:32:12'),
-(52, 'App\\Models\\User', 2, 'ORMS', '2b5f654f1cfd143c5ec6263a7a10a175b4b3467104219277c89236a4bfc62329', '[\"*\"]', NULL, NULL, '2024-12-02 03:58:39', '2024-12-02 03:58:39'),
-(53, 'App\\Models\\User', 2, 'ORMS', '5de9a0e61439527fbea55f1c9a58b636d4283b9c8403fa4ad525d9aaa8aaa763', '[\"*\"]', NULL, NULL, '2024-12-02 22:41:15', '2024-12-02 22:41:15'),
-(54, 'App\\Models\\User', 2, 'ORMS', 'e619344436b821587b0ad7f9df8e88e71b6e11b9b2a0603ad73d2bdb70bfc945', '[\"*\"]', NULL, NULL, '2024-12-03 23:32:04', '2024-12-03 23:32:04'),
-(55, 'App\\Models\\User', 2, 'ORMS', 'c8613a96bb85a163eed157eb068e066486c4512f44db26af98765013d414655b', '[\"*\"]', NULL, NULL, '2024-12-04 05:31:56', '2024-12-04 05:31:56'),
-(56, 'App\\Models\\User', 2, 'ORMS', '61ba60d33594c891a5b78cdca92a2a4caf4178345e7b31b134fa96df55f080d4', '[\"*\"]', NULL, NULL, '2024-12-05 02:36:07', '2024-12-05 02:36:07'),
-(57, 'App\\Models\\User', 2, 'ORMS', 'b07f3a39c636c6c6b0e54811b8e4105eae850b32e9c5787016c6b4bd6ac1b3de', '[\"*\"]', NULL, NULL, '2024-12-09 23:15:22', '2024-12-09 23:15:22'),
-(58, 'App\\Models\\User', 2, 'ORMS', '826f3f2866a20b388cdf10fa3d67dcfb3f3b0917472d8a481d59e7e9d988bfa3', '[\"*\"]', NULL, NULL, '2024-12-10 04:32:51', '2024-12-10 04:32:51'),
-(59, 'App\\Models\\User', 2, 'ORMS', 'fb865b47a3b030b5fc95967e4cf61d43c61e94ee5731b0b07c264070a7397612', '[\"*\"]', NULL, NULL, '2024-12-10 23:36:16', '2024-12-10 23:36:16'),
-(60, 'App\\Models\\User', 2, 'ORMS', '4992e62577f304f6ebf20f255464105b18da243add2d643eca12c451a7852507', '[\"*\"]', NULL, NULL, '2024-12-11 23:51:40', '2024-12-11 23:51:40'),
-(61, 'App\\Models\\User', 2, 'ORMS', '8619073ec4493fa8e2f1d2b85fa378ea2d75cce940ed56883af10998a6115f54', '[\"*\"]', NULL, NULL, '2024-12-21 23:46:08', '2024-12-21 23:46:08'),
-(62, 'App\\Models\\User', 2, 'ORMS', 'f3465820ad74b2b123538031d0dac43e1e7f1d70554202a462e1078d08d0c744', '[\"*\"]', NULL, NULL, '2024-12-22 03:43:38', '2024-12-22 03:43:38'),
-(63, 'App\\Models\\User', 2, 'ORMS', '9b91d941c25c32567088f3be91bce03c2e8b9bff2d9745478e920bfd7ce9cb11', '[\"*\"]', NULL, NULL, '2024-12-22 07:00:24', '2024-12-22 07:00:24'),
-(64, 'App\\Models\\User', 2, 'ORMS', '87fec3354b25a53b197fb9ef912bffa7ea25ea7b5a6a57bb1ea4730f5a66646e', '[\"*\"]', NULL, NULL, '2024-12-23 03:55:51', '2024-12-23 03:55:51');
+(81, 'App\\Models\\User', 3, 'ORMS', '4defb906fe87d5c95679e32230cb1bff07119cdfd79716229b221fa4a39b685d', '[\"*\"]', NULL, NULL, '2024-12-29 03:18:42', '2024-12-29 03:18:42');
 
 -- --------------------------------------------------------
 
@@ -404,13 +401,13 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`id`, `category_id`, `subcategory_id`, `store_id`, `name`, `price`, `description`, `image`, `active`, `company_id`) VALUES
-(1, 1, 1, 1, 'Pepsi', '20', 'test', '1733044745_About-Us.png', 1, 0),
-(2, 1, 1, 8, '7 Up', '332', 'dfgdf', '', 1, 0),
-(4, 3, 4, 1, 'Chicken Fried Rice', '43', 'fhdhgdf', '', 1, 0),
-(6, 1, 1, 1, 'Coca Cola', '234324', 'test', '1733043720_og.png', 1, 0),
-(7, 1, 1, 1, 'Frutika', '4354', 'fghh', '1733048468_res.png', 1, 0),
-(8, 3, 4, 1, 'Yellow Rice', '453', 'fgdf', 'item.png', 1, 0),
-(9, 1, 1, 1, 'Merinda', '3434', 'fghfgh', 'item.png', 1, 0);
+(1, 1, 1, 1, 'Pepsi', '20', 'test', '1733044745_About-Us.png', 1, 1),
+(2, 1, 1, 2, '7 Up', '332', 'dfgdf', '', 1, 1),
+(4, 3, 4, 1, 'Chicken Fried Rice', '43', 'fhdhgdf', '', 1, 1),
+(6, 1, 1, 1, 'Coca Cola', '234324', 'test', '1733043720_og.png', 1, 1),
+(7, 1, 1, 1, 'Frutika', '4354', 'fghh', '1733048468_res.png', 1, 1),
+(8, 3, 4, 1, 'Yellow Rice', '453', 'fgdf', 'item.png', 1, 1),
+(9, 1, 1, 1, 'Merinda', '3434', 'fghfgh', 'item.png', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -453,7 +450,7 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('KDTuWkfvSIYvxm99wiT7QpZ9MxZoPML74muA81GI', 2, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36', 'YTo1OntzOjY6Il90b2tlbiI7czo0MDoieWtBeFYxaURhak1XakFFUm9NZXBXMklkQUVWVTZXb0N0OUJia1ZWdyI7czozOiJ1cmwiO2E6MTp7czo4OiJpbnRlbmRlZCI7czo1MDoiaHR0cDovL3Jlc3RhdXJhbnRfbWFuYWdlbWVudF9zeXN0ZW0udGVzdC9kYXNoYm9hcmQiO31zOjk6Il9wcmV2aW91cyI7YToxOntzOjM6InVybCI7czo0OToiaHR0cDovL3Jlc3RhdXJhbnRfbWFuYWdlbWVudF9zeXN0ZW0udGVzdC9wcm9kdWN0cyI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fXM6NTA6ImxvZ2luX3dlYl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjI7fQ==', 1734950242);
+('OcOWkKHmweNgZazyNgz5q1tDtayjdvJy2n9TlJvy', 3, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoiUlNpQkR0TlNDQ2NmWVZDNFBVbDFBTkw0T3E4WUVoVnp3Z0ZmQWVKRyI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJuZXciO2E6MDp7fXM6Mzoib2xkIjthOjA6e319czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6NTE6Imh0dHA6Ly9yZXN0YXVyYW50X21hbmFnZW1lbnRfc3lzdGVtLnRlc3QvY2F0ZWdvcmllcyI7fXM6NTA6ImxvZ2luX3dlYl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjM7fQ==', 1735463925);
 
 -- --------------------------------------------------------
 
@@ -474,8 +471,22 @@ CREATE TABLE `stores` (
 --
 
 INSERT INTO `stores` (`id`, `name`, `company_id`, `active`, `branch_id`) VALUES
-(1, 'OSSL', 1, 1, 0),
-(8, 'Test', 1, 1, 0);
+(1, 'Floor1', 1, 1, 1),
+(2, 'Floor2', 1, 1, 2),
+(16, 'Floor3', 1, 1, 3),
+(17, 'Rooftop', 1, 1, 3),
+(18, 'Floor1', 2, 1, 6),
+(19, 'Floor2', 2, 1, 6),
+(20, 'Floor3', 2, 1, 6),
+(21, 'Rooftop', 2, 1, 6),
+(22, 'Floor1', 2, 1, 7),
+(23, 'Floor2', 2, 1, 7),
+(24, 'Floor3', 2, 1, 7),
+(25, 'Rooftop', 2, 1, 7),
+(26, 'Floor1', 2, 1, 8),
+(27, 'Floor2', 2, 1, 8),
+(28, 'Floor3', 2, 1, 8),
+(29, 'Rooftop', 2, 1, 8);
 
 -- --------------------------------------------------------
 
@@ -499,8 +510,9 @@ CREATE TABLE `subcategory` (
 --
 
 INSERT INTO `subcategory` (`id`, `category_id`, `name`, `description`, `active`, `created_at`, `updated_at`, `company_id`) VALUES
-(1, 1, 'Soft Drinks', 'soft-drinks', 1, '2024-11-24 06:28:42', '2024-12-01 10:07:16', 0),
-(4, 3, 'Fried Rice', 'fried rice', 1, '2024-11-24 12:00:54', '2024-11-24 12:00:54', 0);
+(1, 1, 'Soft Drinks', 'soft-drinks', 1, '2024-11-24 06:28:42', '2024-12-24 04:53:55', 1),
+(4, 3, 'Fried Rice', 'fried rice', 1, '2024-11-24 12:00:54', '2024-12-24 04:53:57', 1),
+(5, 4, 'Cake', 'Cake', 1, '2024-12-29 09:09:38', '2024-12-29 09:09:38', 2);
 
 -- --------------------------------------------------------
 
@@ -523,11 +535,12 @@ CREATE TABLE `tables` (
 --
 
 INSERT INTO `tables` (`id`, `table_name`, `capacity`, `available`, `active`, `store_id`, `company_id`) VALUES
-(1, 'Table-1', '8', 1, 1, 1, 0),
-(2, 'Table-2', '4', 4, 1, 1, 0),
-(3, 'Table-3', '2', 2, 1, 1, 0),
-(4, 'Table-4', '3', 3, 1, 1, 0),
-(7, 'Table-5', '4', 4, 1, 1, 0);
+(1, 'Table-1', '8', 1, 1, 1, 1),
+(2, 'Table-2', '4', 4, 1, 1, 1),
+(3, 'Table-3', '2', 2, 1, 1, 1),
+(4, 'Table-4', '3', 3, 1, 1, 1),
+(7, 'Table-5', '4', 4, 1, 1, 1),
+(8, 'Table-1', '5', 5, 1, 18, 2);
 
 -- --------------------------------------------------------
 
@@ -558,8 +571,9 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `username`, `email`, `firstname`, `lastname`, `phone`, `gender`, `company_id`, `role_id`, `email_verified_at`, `password`, `image`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'kkjbjkn', 'amanaltdmd@gmail.com', 'jkjkn', 'kjjk', '+8801703560212', 1, 1, 1, NULL, '$2y$12$8XFOhtnBBpdURU8AIhNwceVE/vDnYox47dDhLlBvgsPIBhirMwtY6', '', NULL, '2024-11-21 02:44:32', '2024-11-21 02:44:32'),
-(2, 'fahadalpha35', 'fahad@gmail.com', 'Fahad', 'Ahmed', '+8801790004664', 1, 1, 1, NULL, '$2y$12$hDDJkcLPe8BmGnE6H9ItzO8aX20lS2za7o9V1ogFLMH0BB5tNhlBW', '1732770378_FahadNew1.jpg', 'b1sbAQuzPskYUvUepYPlt9kLKy3BIsoy30i4S84qegFKBejVnFYjw2Pctf9y', '2024-11-21 03:02:58', '2024-11-21 03:02:58');
+(1, 'kabirhossain', 'amanaltdmd@gmail.com', 'Kobir', 'Hossain', '+8801703560212', 1, 2, 1, NULL, '$2y$12$hDDJkcLPe8BmGnE6H9ItzO8aX20lS2za7o9V1ogFLMH0BB5tNhlBW', '', NULL, '2024-11-21 02:44:32', '2024-11-21 02:44:32'),
+(2, 'fahadalpha35', 'fahad@gmail.com', 'Fahad', 'Ahmed', '+8801790004664', 1, 1, 1, NULL, '$2y$12$hDDJkcLPe8BmGnE6H9ItzO8aX20lS2za7o9V1ogFLMH0BB5tNhlBW', '1732770378_FahadNew1.jpg', 'QhPnTDb1WBIkP5CmELF3CmZ8WlC9ue4ePhlumtQV5qEo39qMcaNPkQmzWKcv', '2024-11-21 03:02:58', '2024-11-21 03:02:58'),
+(3, 'test', 'test@gmail.com', 'test', 'test', '01790004664', 1, 2, 1, NULL, '$2y$12$hDDJkcLPe8BmGnE6H9ItzO8aX20lS2za7o9V1ogFLMH0BB5tNhlBW', '', NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -588,7 +602,8 @@ INSERT INTO `user_roles` (`id`, `user_id`, `role_id`) VALUES
 -- Indexes for table `branch`
 --
 ALTER TABLE `branch`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_branch_company` (`company_id`);
 
 --
 -- Indexes for table `cache`
@@ -606,7 +621,8 @@ ALTER TABLE `cache_locks`
 -- Indexes for table `category`
 --
 ALTER TABLE `category`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_category_company` (`company_id`);
 
 --
 -- Indexes for table `company`
@@ -658,14 +674,17 @@ ALTER TABLE `old_users`
 ALTER TABLE `orders`
   ADD PRIMARY KEY (`id`),
   ADD KEY `fk_orders_table_id` (`table_id`),
-  ADD KEY `fk_orders_store_id` (`store_id`);
+  ADD KEY `fk_orders_store_id` (`store_id`),
+  ADD KEY `fk_orders_company` (`company_id`),
+  ADD KEY `fk_orders_branch` (`branch_id`);
 
 --
 -- Indexes for table `order_items`
 --
 ALTER TABLE `order_items`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_orders_order_id` (`order_id`);
+  ADD KEY `fk_orders_order_id` (`order_id`),
+  ADD KEY `fk_order_items_company` (`company_id`);
 
 --
 -- Indexes for table `password_reset_tokens`
@@ -688,7 +707,8 @@ ALTER TABLE `products`
   ADD PRIMARY KEY (`id`),
   ADD KEY `fk_products_category` (`category_id`),
   ADD KEY `fk_products_subcategory` (`subcategory_id`),
-  ADD KEY `fk_products_stores` (`store_id`);
+  ADD KEY `fk_products_stores` (`store_id`),
+  ADD KEY `fk_products_company` (`company_id`);
 
 --
 -- Indexes for table `roles`
@@ -709,21 +729,24 @@ ALTER TABLE `sessions`
 --
 ALTER TABLE `stores`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `store_company` (`company_id`);
+  ADD KEY `store_company` (`company_id`),
+  ADD KEY `fk_stores_branch` (`branch_id`);
 
 --
 -- Indexes for table `subcategory`
 --
 ALTER TABLE `subcategory`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `category_id` (`category_id`);
+  ADD KEY `category_id` (`category_id`),
+  ADD KEY `fk_subcategory_company` (`company_id`);
 
 --
 -- Indexes for table `tables`
 --
 ALTER TABLE `tables`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `tables_store` (`store_id`);
+  ADD KEY `tables_store` (`store_id`),
+  ADD KEY `fk_tables_company` (`company_id`);
 
 --
 -- Indexes for table `users`
@@ -747,13 +770,13 @@ ALTER TABLE `user_roles`
 -- AUTO_INCREMENT for table `branch`
 --
 ALTER TABLE `branch`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `category`
 --
 ALTER TABLE `category`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `company`
@@ -801,7 +824,7 @@ ALTER TABLE `order_items`
 -- AUTO_INCREMENT for table `personal_access_tokens`
 --
 ALTER TABLE `personal_access_tokens`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=65;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=82;
 
 --
 -- AUTO_INCREMENT for table `products`
@@ -819,19 +842,19 @@ ALTER TABLE `roles`
 -- AUTO_INCREMENT for table `stores`
 --
 ALTER TABLE `stores`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT for table `subcategory`
 --
 ALTER TABLE `subcategory`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `tables`
 --
 ALTER TABLE `tables`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `users`
@@ -850,9 +873,23 @@ ALTER TABLE `user_roles`
 --
 
 --
+-- Constraints for table `branch`
+--
+ALTER TABLE `branch`
+  ADD CONSTRAINT `fk_branch_company` FOREIGN KEY (`company_id`) REFERENCES `company` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `category`
+--
+ALTER TABLE `category`
+  ADD CONSTRAINT `fk_category_company` FOREIGN KEY (`company_id`) REFERENCES `company` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
 -- Constraints for table `orders`
 --
 ALTER TABLE `orders`
+  ADD CONSTRAINT `fk_orders_branch` FOREIGN KEY (`branch_id`) REFERENCES `branch` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_orders_company` FOREIGN KEY (`company_id`) REFERENCES `company` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `fk_orders_store_id` FOREIGN KEY (`store_id`) REFERENCES `stores` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `fk_orders_table_id` FOREIGN KEY (`table_id`) REFERENCES `tables` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
@@ -860,6 +897,7 @@ ALTER TABLE `orders`
 -- Constraints for table `order_items`
 --
 ALTER TABLE `order_items`
+  ADD CONSTRAINT `fk_order_items_company` FOREIGN KEY (`company_id`) REFERENCES `company` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `fk_orders_order_id` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
@@ -867,6 +905,7 @@ ALTER TABLE `order_items`
 --
 ALTER TABLE `products`
   ADD CONSTRAINT `fk_products_category` FOREIGN KEY (`category_id`) REFERENCES `category` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_products_company` FOREIGN KEY (`company_id`) REFERENCES `company` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `fk_products_stores` FOREIGN KEY (`store_id`) REFERENCES `stores` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `fk_products_subcategory` FOREIGN KEY (`subcategory_id`) REFERENCES `subcategory` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
@@ -874,18 +913,21 @@ ALTER TABLE `products`
 -- Constraints for table `stores`
 --
 ALTER TABLE `stores`
+  ADD CONSTRAINT `fk_stores_branch` FOREIGN KEY (`branch_id`) REFERENCES `branch` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `store_company` FOREIGN KEY (`company_id`) REFERENCES `company` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `subcategory`
 --
 ALTER TABLE `subcategory`
+  ADD CONSTRAINT `fk_subcategory_company` FOREIGN KEY (`company_id`) REFERENCES `company` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `subcategory_ibfk_1` FOREIGN KEY (`category_id`) REFERENCES `category` (`id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `tables`
 --
 ALTER TABLE `tables`
+  ADD CONSTRAINT `fk_tables_company` FOREIGN KEY (`company_id`) REFERENCES `company` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `tables_store` FOREIGN KEY (`store_id`) REFERENCES `stores` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Auth;
 
 class TablesController extends Controller
 {
@@ -12,12 +13,16 @@ class TablesController extends Controller
      */
     public function index()
     {
-        // Fetch all tables with their associated store names
+        $user_company_id = Auth::user()->company_id;
+
+        // Fetch all tables with their associated store names and branch names
         $tables = DB::table('tables')
             ->join('stores', 'tables.store_id', '=', 'stores.id')
-            ->select('tables.*', 'stores.name as store_name')
+            ->join('branch', 'stores.branch_id', '=', 'branch.id') // Join the branches table
+            ->select('tables.*', 'stores.name as store_name', 'branch.name as branch_name') // Select branch name
+            ->where('tables.company_id', $user_company_id)
             ->get();
-        
+
         return view('tables.index', compact('tables'));
     }
 
@@ -26,8 +31,14 @@ class TablesController extends Controller
      */
     public function create()
     {
-        // Fetch all stores for dropdown
-        $stores = DB::table('stores')->where('active', 1)->get();
+        $user_company_id = Auth::user()->company_id;
+
+        // Fetch stores for the logged-in user's company where active status is 1
+        $stores = DB::table('stores')
+                    ->where('active', 1)
+                    ->where('company_id', $user_company_id)
+                    ->get();
+
         return view('tables.create', compact('stores'));
     }
 
@@ -36,6 +47,7 @@ class TablesController extends Controller
      */
     public function store(Request $request)
     {
+        $user_company_id = Auth::user()->company_id;
         // Validate incoming data
         $request->validate([
             'table_name' => 'required|string|max:255',
@@ -52,6 +64,7 @@ class TablesController extends Controller
             'available' => $request->available,
             'active' => $request->active,
             'store_id' => $request->store_id,
+            'company_id' => $user_company_id
         ]);
 
         return redirect()->route('tables.index')->with('success', 'Table created successfully!');

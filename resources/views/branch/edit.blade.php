@@ -7,8 +7,8 @@
             <div class="row mb-2">
                 <div class="col-sm-6">
                     <!-- Back Button -->
-                    <a href="{{route('stores.index')}}" class="btn btn-secondary" style="background-color:#17a2b8;">Back</a><br><br>
-                    <h1 class="m-0">Edit Floor</h1>
+                    <a href="{{route('branches.index')}}" class="btn btn-secondary" style="background-color:#17a2b8;">Back</a><br><br>
+                    <h1 class="m-0">Edit Branch</h1>
                 </div>
             </div>
         </div>
@@ -16,23 +16,12 @@
 
     <section class="content">
         <div class="container-fluid">
-            <form action="{{ route('stores.update', $store->id) }}" method="POST"   style="background-color:#fff;padding:20px;">
+            <form action="{{ route('branches.update', $store->id) }}" method="POST"   style="background-color:#fff;padding:20px;">
                 @csrf
                 @method('PUT')
                 <div class="form-group">
-                    <label for="name">Floor Name</label>
+                    <label for="name">Branch Name</label>
                     <input type="text" class="form-control" name="name" id="name" value="{{ $store->name }}" required>
-                </div>
-                <!-- Branch Selection -->
-                <div class="form-group">
-                    <label for="branch_id">Branch:</label>
-                    <select name="branch_id" id="branch_id" class="form-control" required>
-                        @foreach($branches as $branch)
-                            <option value="{{ $branch->id }}" {{ $branch->id == $store->branch_id ? 'selected' : '' }}>
-                                {{ $branch->name }}
-                            </option> 
-                        @endforeach                       
-                    </select>
                 </div>
                 <div class="form-group">
                     <label for="active">Active</label>

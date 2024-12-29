@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Auth;
 
 class SubCategoryController extends Controller
 {
@@ -12,9 +13,11 @@ class SubCategoryController extends Controller
      */
     public function index()
     {
+        $user_company_id = Auth::user()->company_id;
         $subcategories = DB::table('subcategory')
             ->join('category', 'subcategory.category_id', '=', 'category.id')
             ->select('subcategory.*', 'category.name as category_name')
+            ->where('company_id', $user_company_id)
             ->get();
 
         return view('categories.index', compact('subcategories'));
@@ -25,7 +28,10 @@ class SubCategoryController extends Controller
      */
     public function create()
     {
-        $categories = DB::table('category')->where('active', 1)->get();
+        $user_company_id = Auth::user()->company_id;
+        $categories = DB::table('category')->where('active', 1)
+        ->where('company_id', $user_company_id)
+        ->get();
         return view('subcategories.create', compact('categories'));
     }
 
@@ -34,6 +40,7 @@ class SubCategoryController extends Controller
      */
     public function store(Request $request)
     {
+        $user_company_id = Auth::user()->company_id;
         $request->validate([
             'category_id' => 'required|integer',
             'name' => 'required|string|max:255',
@@ -45,7 +52,8 @@ class SubCategoryController extends Controller
             'category_id' => $request->category_id,
             'name' => $request->name,
             'description' => $request->description,
-            'active' => $request->active
+            'active' => $request->active,
+            'company_id' => $user_company_id
         ]);
 
         return redirect()->route('categories.index')->with('success', 'Subcategory created successfully.');

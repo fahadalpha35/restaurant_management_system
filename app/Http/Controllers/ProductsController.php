@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Auth;
 
 class ProductsController extends Controller
 {
@@ -12,10 +13,12 @@ class ProductsController extends Controller
      */
     public function index()
     {
+        $user_company_id = Auth::user()->company_id;
         $products = DB::table('products')
             ->join('category', 'products.category_id', '=', 'category.id')
             ->join('subcategory', 'products.subcategory_id', '=', 'subcategory.id')
             ->select('products.*', 'category.name as category_name', 'subcategory.name as subcategory_name')
+            ->where('products.company_id', $user_company_id)
             ->get();
 
         return view('products.index', compact('products'));
@@ -23,7 +26,10 @@ class ProductsController extends Controller
 
     public function getSubcategories($categoryId)
     {
-        $subcategories = DB::table('subcategory')->where('category_id', $categoryId)->get();
+        $user_company_id = Auth::user()->company_id;
+        $subcategories = DB::table('subcategory')->where('category_id', $categoryId)
+        ->where('subcategory.company_id', $user_company_id)
+        ->get();
         return response()->json($subcategories);
     }
 
@@ -32,9 +38,13 @@ class ProductsController extends Controller
      */
     public function create()
     {
-        $categories = DB::table('category')->get();
-        $subcategories = DB::table('subcategory')->get();
-        $store = DB::table('stores')->get();
+        $user_company_id = Auth::user()->company_id;
+        $categories = DB::table('category')
+        ->where('category.company_id', $user_company_id)->get();
+        $subcategories = DB::table('subcategory')
+        ->where('subcategory.company_id', $user_company_id)->get();
+        $store = DB::table('stores')
+        ->where('stores.company_id', $user_company_id)->get();
         return view('products.create', compact('categories','subcategories','store'));
     }
 
@@ -43,6 +53,7 @@ class ProductsController extends Controller
      */
     public function store(Request $request)
     {
+        $user_company_id = Auth::user()->company_id;
         $request->validate([
             'category_id' => 'required',
             'subcategory_id' => 'required',
@@ -61,6 +72,8 @@ class ProductsController extends Controller
             'description',
             'active',
         ]);
+
+        $data['company_id'] = $user_company_id;
 
             // Handle image upload
             if ($request->hasFile('image')) {
