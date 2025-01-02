@@ -28,14 +28,20 @@ class OrdersController extends Controller
      */
     public function create()
     {
+        $order_unique_id = 'ORD-' . strtoupper(uniqid());
+        
         $user_company_id = Auth::user()->company_id;
         $tables = DB::table('tables')
         ->where('tables.company_id', $user_company_id)->get();
+        $branch = DB::table('branch')
+        ->where('branch.company_id', $user_company_id)->get();
+        $store = DB::table('stores')
+        ->where('stores.company_id', $user_company_id)->get();
         $products = DB::table('products')
         ->where('products.company_id', $user_company_id)->get();
         $orders = DB::table('orders')
         ->where('orders.company_id', $user_company_id)->get();
-        return view('orders.create', compact('tables', 'products', 'orders'));
+        return view('orders.create', compact('tables', 'products', 'orders','branch','store', 'order_unique_id'));
     }
 
     /**
@@ -64,7 +70,8 @@ class OrdersController extends Controller
 
         // Store order data
         $orderData = [
-            'bill_no' => 'ORD-' . strtoupper(uniqid()),
+            // 'bill_no' => 'ORD-' . strtoupper(uniqid()),
+            'bill_no' => $request->bill_no,
             'date_time' => now(),
             'gross_amount' => $grossAmount,
             'service_charge_rate' => $serviceChargeRate,
@@ -76,9 +83,9 @@ class OrdersController extends Controller
             'user_id' => Auth::id(),
             'table_id' => $request->table,
             'paid_status' =>  $request->paid_status,
-            'store_id' => 1,
+            'store_id' => $request->store,
             'company_id' => $user_company_id,
-            'branch_id' => 1,
+            'branch_id' => $request->branch,
             'order_status' => 1
         ];
 
@@ -92,6 +99,7 @@ class OrdersController extends Controller
                 'qty' => $product['qty'],
                 'rate' => $product['rate'],
                 'amount' => $product['amount'],
+                'company_id' => $user_company_id,
             ]);
         }
 

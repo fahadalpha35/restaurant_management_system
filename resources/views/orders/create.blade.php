@@ -10,7 +10,7 @@
 
     <section class="content" style="background-color:#fff;padding:20px;">
     <div class="order-form-header">
-                    <h2>Bill No. : ORD-674BF</h2>
+                    <h2>Order No. : {{$order_unique_id}}</h2>
                     <div class="date-time">
                         <div>Date: <span id="currentDate"></span></div>
                         <div>Time: <span id="currentTime"></span></div>
@@ -18,14 +18,40 @@
                 </div>
         <form action="{{ route('orders.store') }}" method="POST">
             @csrf
-            <div class="form-group">
-                <label for="table">Table</label>
-                <select name="table" id="table" class="form-control" required>
-                    <option value="" disabled selected>Select Table</option>
-                    @foreach($tables as $table)
-                        <option value="{{ $table->id }}">{{ $table->table_name }}</option>
-                    @endforeach
-                </select>
+            <div class="form-container">
+                <div class="form-group">
+                    <label for="branch">Branch</label>
+                    <select name="branch" id="branch" class="form-control" required>
+                        <option value="" disabled selected>Select Branch</option>
+                        @foreach($branch as $branches)
+                            <option value="{{ $branches->id }}">{{ $branches->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="store">Floor</label>
+                    <select name="store" id="store" class="form-control" required>
+                        <option value="" disabled selected>Select Floor</option>
+                        @foreach($store as $stores)
+                            <option value="{{ $stores->id }}">{{ $stores->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="table">Table</label>
+                    <select name="table" id="table" class="form-control" required>
+                        <option value="" disabled selected>Select Table</option>
+                        @foreach($tables as $table)
+                            <option value="{{ $table->id }}">{{ $table->table_name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <input type="text" hidden class="form-control" name="bill_no" value="{{$order_unique_id}}">
+                </div>
             </div>
 
             <div class="product-section">
@@ -88,6 +114,42 @@
 </div>
 
 <style>
+
+    .form-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        justify-content: space-between;
+    }
+
+    .form-group {
+        flex: 1 1 calc(33.333% - 20px); /* Three columns with a gap of 20px */
+        min-width: 200px; /* Ensures minimum size for smaller screens */
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: bold;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 8px;
+        font-size: 1rem;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        .form-group {
+            flex: 1 1 100%; /* Stack columns on smaller screens */
+        }
+    }
+
+
     /* Input Field ReadOnly */
     input[readonly] {
         background-color: #f0f0f0; /* Light grey background */

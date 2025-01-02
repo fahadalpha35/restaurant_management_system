@@ -36,8 +36,9 @@
       <thead>
           <tr>
               <th>ID</th>
-              <th>Bill No.</th>
-              <th>Store</th>
+              <th>Order No.</th>
+              <th>Table No.</th>
+              <th>Floor</th>
               <th>Date Time</th>
               <th>Total Products</th>
               <th>Total Amount</th>
@@ -51,6 +52,7 @@
               <tr>
                   <td>{{ $i++ }}</td>
                   <td>{{ $orders->bill_no }}</td>
+                  <td></td>
                   <td>{{ $orders->store_name }}</td>
                   <td>{{ $orders->date_time }}</td>
                   <td></td>
@@ -81,7 +83,7 @@
     $('#storesTable').DataTable({
       responsive: true, // Enable responsive behavior
       dom: 'Bfrtip',
-      order: [[0, 'desc']],
+      // order: [[0, 'desc']],
         buttons: [
             {
                 extend: 'print',
