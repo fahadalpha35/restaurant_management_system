@@ -9,11 +9,17 @@
 </head>
 <body>
 <main>
+<!-- #310693 -->
     <section class="form-section">
-        <div class="form-wrapper">
-        <center><h1 class=""><font color="#310693">{{ __('Welcome') }}</font></h1></center>
+        <div class="form-wrapper" style="background: linear-gradient(90deg, #30376b 1%, #14af0b 50%, #30376b 99%);">
+          <div style="background: linear-gradient(90deg, rgba(48,55,107,1) 22%, rgba(20,175,11,1) 50%, rgba(48,55,107,1) 78%);border: 4px solid rgba(4, 88, 0, 0.68);height:55px;">
+                  <a href="{{ url('/') }}" class="brand-link reslogo" >
+                  <center><font color="#fff" face="Georgia" weight="bolder" size="5"><b><font color="#ffca00">R</font>estaurant<font color="#ff0000ad">P</font><font color="#459fff">O</font><font color="#ff0000ad">S</font></b></font></center>
+                  </a>
+          </div>
+        <center><h1 class=""><font color="#ffffff">{{ __('Welcome') }}</font></h1></center>
             <center>
-                <p><font color="#8c3fe2">{{ __('Please Login To Your Account') }}</font></p>
+                <p><font color="#ffffff">{{ __('Please Login To Your Account') }}</font></p>
             </center>
             <form method="POST" action="{{ route('login') }}" class="form">
                 @csrf

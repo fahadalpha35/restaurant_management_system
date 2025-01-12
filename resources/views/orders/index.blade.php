@@ -26,6 +26,26 @@
       <div class="container-fluid">
       <a href="{{ route('orders.create') }}" class="btn btn-primary mb-3">Add New Order</a>
 
+      <form id="filterForm" method="GET" action="{{ route('tables.index') }}">
+        <div class="form-container">
+        <div class="form-group">
+            <label for="branch">Branch Name:</label>
+            <select name="branch" id="branch" class="form-control" onchange="document.getElementById('filterForm').submit();">
+                <option value="">Select Branch</option>
+
+            </select>
+        </div>
+
+        <div class="form-group">
+                <label for="floor">Floor Name:</label>
+                <select name="store" id="store" class="form-control" onchange="document.getElementById('filterForm').submit();">
+                    <option value="">Select Floor</option>
+
+                </select>
+            </div>
+        </div>
+    </form>
+
       @if(session('success'))
           <div class="alert alert-success">
               {{ session('success') }}
@@ -39,6 +59,7 @@
               <th>Order No.</th>
               <th>Table No.</th>
               <th>Floor</th>
+              <th>Branch</th>
               <th>Date Time</th>
               <th>Total Products</th>
               <th>Total Amount</th>
@@ -52,8 +73,9 @@
               <tr>
                   <td>{{ $i++ }}</td>
                   <td>{{ $orders->bill_no }}</td>
-                  <td></td>
+                  <td>{{ $orders->table_name }}</td>
                   <td>{{ $orders->store_name }}</td>
+                  <td>{{ $orders->branch_name }}</td>
                   <td>{{ $orders->date_time }}</td>
                   <td></td>
                   <td>{{ $orders->net_amount }} BDT</td>
@@ -74,6 +96,36 @@
     </section>
     <!-- /.content -->
   </div>
+
+  <style>
+      /* Add the container style */
+      .form-container {
+          display: grid;
+          grid-template-columns: repeat(2, 1fr); /* Creates two equal-width columns */
+          gap: 20px; /* Adds space between the columns */
+      }
+
+      /* Make sure form groups are stacked on smaller screens */
+      @media (max-width: 768px) {
+          .form-container {
+              grid-template-columns: 1fr; /* Stack columns on small screens */
+          }
+      }
+
+      /* Ensure the select elements fill the container */
+      .form-group {
+          width: 100%;
+      }
+
+      /* Style the form control to be more consistent */
+      .form-control {
+          width: 100%;
+          padding: 8px;
+          margin-top: 5px;
+          border-radius: 4px;
+          border: 1px solid #ccc;
+      }
+  </style>
 
   @endsection
 

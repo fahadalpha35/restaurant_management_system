@@ -16,7 +16,9 @@ class OrdersController extends Controller
         $user_company_id = Auth::user()->company_id;
         $orders = DB::table('orders')
             ->join('stores', 'stores.id', '=', 'orders.store_id')
-            ->select('orders.*', 'stores.name as store_name')
+            ->join('tables', 'tables.id', '=', 'orders.table_id')
+            ->join('branch', 'branch.id', '=', 'orders.branch_id')
+            ->select('orders.*', 'stores.name as store_name', 'tables.table_name as table_name', 'branch.name as branch_name')
             ->orderBy('orders.id', 'desc')
             ->where('orders.company_id', $user_company_id)
             ->get();

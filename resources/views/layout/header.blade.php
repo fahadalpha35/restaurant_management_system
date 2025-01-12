@@ -80,7 +80,7 @@
     <div class="flex justify-center my-20">
       <div
         style="font-family: 'Noto Serif TC', serif; font-optical-sizing: auto;padding:0px;"
-      ><a href="{{route('orders.create')}}" class="btn btn-secondary" style="background-color:#FFC300;border-radius: 6px;padding:2px;margin-top:4px;">
+      ><a href="{{route('orders.create')}}" class="btn btn-secondary" style="background-color:#FFC300;border-radius: 6px;padding:2px;margin-top:4px;border: 1px solid #28a745;">
         <img src="{{ asset('dist/img/order.png') }}" width="23" alt="logo">
       </a>
       </div>
