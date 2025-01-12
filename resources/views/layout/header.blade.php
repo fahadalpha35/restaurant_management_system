@@ -76,6 +76,17 @@
 }
 </style>  
 
+  <div class="calpopupbutton">
+    <div class="flex justify-center my-20">
+      <div
+        style="font-family: 'Noto Serif TC', serif; font-optical-sizing: auto;padding:0px;"
+      ><a href="{{route('orders.create')}}" class="btn btn-secondary" style="background-color:#FFC300;border-radius: 6px;padding:2px;margin-top:4px;">
+        <img src="{{ asset('dist/img/order.png') }}" width="23" alt="logo">
+      </a>
+      </div>
+    </div>
+  </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
 
   <div class="calpopupbutton">
   <div class="flex justify-center my-20">
@@ -83,10 +94,10 @@
       type="button"
       popovertarget="my-popover"
       popovertargetaction="show"
-      class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
-      style="font-family: 'Noto Serif TC', serif; font-optical-sizing: auto;padding:0px;border-radius: 6px;height:25px;margin-top:7px;"
+      class="text-gray-900 focus:outline-none hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700 dark:focus:ring-gray-700"
+      style="font-family: 'Noto Serif TC', serif; font-optical-sizing: auto; padding: 0px; border-radius: 6px; height: 25px; margin-top: 7px; background-color: #ffffff; border: 1px solid #28a745;"
     >
-      <img src="{{ asset('dist/img/cal.png') }}" width="20" alt="logo" style="margin-top:-3px;">
+      <img src="{{ asset('dist/img/cal3.png') }}" width="20" alt="logo" style="margin-top:-3px;">
     </button>
   </div>
 </div>&nbsp;&nbsp;
@@ -170,15 +181,9 @@
 
 <!-- Calculator End -->
 
-
-
-
-
-
-
       <!-- Messages Dropdown Menu -->
 
-      <!-- Notifications Dropdown Menu -->
+      <!-- Notifications Dropdown Menu
       <li class="nav-item dropdown">
         <a class="nav-link" data-toggle="dropdown" href="#">
           <i class="far fa-bell" style="color: #fff;"></i>
@@ -204,7 +209,7 @@
           <div class="dropdown-divider"></div>
           <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
         </div>
-      </li>
+      </li> -->
       <li class="nav-item">
         <a class="nav-link" data-widget="fullscreen" href="#" role="button">
           <i class="fas fa-expand-arrows-alt" style="color: #fff;"></i>
