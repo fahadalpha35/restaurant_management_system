@@ -19,35 +19,29 @@
         <form action="{{ route('orders.store') }}" method="POST">
             @csrf
             <div class="form-container">
-                <div class="form-group">
-                    <label for="branch">Branch</label>
-                    <select name="branch" id="branch" class="form-control" required>
-                        <option value="" disabled selected>Select Branch</option>
-                        @foreach($branch as $branches)
-                            <option value="{{ $branches->id }}">{{ $branches->name }}</option>
-                        @endforeach
-                    </select>
-                </div>
+            <div class="form-group">
+                <label for="branch">Branch</label>
+                <select name="branch" id="branch" class="form-control" required>
+                    <option value="" disabled selected>Select Branch</option>
+                    @foreach($branch as $branches)
+                        <option value="{{ $branches->id }}">{{ $branches->name }}</option>
+                    @endforeach
+                </select>
+            </div>
 
-                <div class="form-group">
-                    <label for="store">Floor</label>
-                    <select name="store" id="store" class="form-control" required>
-                        <option value="" disabled selected>Select Floor</option>
-                        @foreach($store as $stores)
-                            <option value="{{ $stores->id }}">{{ $stores->name }}</option>
-                        @endforeach
-                    </select>
-                </div>
+            <div class="form-group">
+                <label for="store">Floor</label>
+                <select name="store" id="store" class="form-control">
+                    <option value="">Select Floor</option>
+                </select>
+            </div>
 
-                <div class="form-group">
-                    <label for="table">Table</label>
-                    <select name="table" id="table" class="form-control" required>
-                        <option value="" disabled selected>Select Table</option>
-                        @foreach($tables as $table)
-                            <option value="{{ $table->id }}">{{ $table->table_name }}</option>
-                        @endforeach
-                    </select>
-                </div>
+            <div class="form-group">
+                <label for="table">Table</label>
+                <select name="table" id="table" class="form-control" required>
+                    <option value="">Select Table</option>
+                </select>
+            </div>
 
                 <div class="form-group">
                     <input type="text" hidden class="form-control" name="bill_no" value="{{$order_unique_id}}">
@@ -60,7 +54,7 @@
                         <tr>
                             <th>Product</th>
                             <th>Qty</th>
-                            <th>Rate</th>
+                            <th>Price</th>
                             <th>Amount</th>
                             <th>Action</th>
                         </tr>
@@ -350,9 +344,67 @@ document.addEventListener('DOMContentLoaded', function () {
     calculateAmounts();
 });
 </script>
+
 @endsection
 
 @push('masterScripts')
+<script>
+    $(document).ready(function () {
+        // Fetch Floors based on selected Branch
+        $('#branch').on('change', function () {
+            var branchId = $(this).val();
+            if (branchId) {
+                $.ajax({
+                    url: '/get-floor/' + branchId,
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function (data) {
+                        $('#store').empty().append('<option value="">Select Floor</option>');
+                        $.each(data, function (key, value) {
+                            $('#store').append('<option value="' + value.id + '">' + value.name + '</option>');
+                        });
+
+                        // Clear the Table dropdown
+                        $('#table').empty().append('<option value="">Select Table</option>');
+                    },
+                    error: function (xhr, status, error) {
+                        console.error('Error fetching floors:', error);
+                    }
+                });
+            } else {
+                $('#store').empty().append('<option value="">Select Floor</option>');
+                $('#table').empty().append('<option value="">Select Table</option>');
+            }
+        });
+
+        // Fetch Tables based on selected Floor
+        $('#store').on('change', function () {
+    var storeId = $(this).val();
+    if (storeId) {
+        $.ajax({
+            url: '/get-table/' + storeId,
+            type: 'GET',
+            dataType: 'json',
+            success: function (data) {
+                console.log(data); // Inspect the response
+                $('#table').empty();
+                $('#table').append('<option value="">Select Table</option>');
+                $.each(data, function (key, value) {
+                    console.log(value); // Log each item in the response
+                    // Use table_name here instead of name
+                    $('#table').append('<option value="' + value.id + '">' + value.table_name + '</option>');
+                });
+            },
+            error: function (xhr, status, error) {
+                console.error('Error fetching tables:', error);
+            }
+        });
+    } else {
+        $('#table').empty().append('<option value="">Select Table</option>');
+    }
+});
+    });
+</script>
   <script>
     $(document).ready(function() {
         $('.select2bs4').select2({

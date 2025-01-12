@@ -33,13 +33,18 @@ class TablesController extends Controller
     {
         $user_company_id = Auth::user()->company_id;
 
+        $branches = DB::table('branch')
+                    ->where('active', 1)
+                    ->where('company_id', $user_company_id)
+                    ->get();
+
         // Fetch stores for the logged-in user's company where active status is 1
         $stores = DB::table('stores')
                     ->where('active', 1)
                     ->where('company_id', $user_company_id)
                     ->get();
 
-        return view('tables.create', compact('stores'));
+        return view('tables.create', compact('stores','branches'));
     }
 
     /**
@@ -75,11 +80,28 @@ class TablesController extends Controller
      */
     public function edit(string $id)
     {
-        // Fetch the table and all stores
-        $table = DB::table('tables')->where('id', $id)->first();
-        $stores = DB::table('stores')->where('active', 1)->get();
 
-        return view('tables.edit', compact('table', 'stores'));
+        $table = DB::table('tables')
+            ->join('stores', 'tables.store_id', '=', 'stores.id')
+            ->join('branch', 'stores.branch_id', '=', 'branch.id') // Join the branches table
+            ->select('tables.*', 'stores.name as store_name', 'branch.name as branch_name', 'branch.id as selectedBranchId') // Select branch name
+            ->where('tables.id', $id)
+            ->first();
+
+            $user_company_id = Auth::user()->company_id;
+
+            $branches = DB::table('branch')
+                        ->where('active', 1)
+                        ->where('company_id', $user_company_id)
+                        ->get();
+    
+            // Fetch stores for the logged-in user's company where active status is 1
+            $stores = DB::table('stores')
+                        ->where('active', 1)
+                        ->where('company_id', $user_company_id)
+                        ->get();
+    
+        return view('tables.edit', compact('table', 'branches', 'stores'));
     }
 
     /**

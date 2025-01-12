@@ -41,6 +41,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::resource('subcategories', SubCategoryController::class);
     // Route for fetching subcategories based on category
     Route::get('/get-subcategories/{categoryId}', [ProductsController::class, 'getSubcategories']);
+    Route::get('/get-floor/{branchId}', [OrdersController::class, 'getStore']);
+    Route::get('/get-table/{storeId}', [OrdersController::class, 'getTables']);
     Route::resource('company', CompanyController::class);
     Route::resource('groups', GroupsController::class);
     Route::resource('orders', OrdersController::class);

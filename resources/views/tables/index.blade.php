@@ -15,161 +15,59 @@
         </div>
     </div>
 
+    <div class="form-container">
+            <div class="form-group">
+                <label for="store">Branch Name:</label>
+                <select name="store" id="store" class="form-control">
+                    <option value="">Select Branch</option>
+                    <!-- Add options here -->
+                </select>
+            </div>
 
-    <div class="tablecontainer">
-        <div class="tablebox">
-            <div class="item">
-                <b>Table 1</b><br>
-                Seat Capacity: 4<br>
-                Seat Occupied: 4<br>
-                <b>Status: Occupied</b> 
+            <div class="form-group">
+                <label for="other">Floor Name:</label>
+                <select name="other" id="other" class="form-control">
+                    <option value="">Select Floor</option>
+                    <!-- Add options here -->
+                </select>
             </div>
-        </div>&nbsp;&nbsp;
-        <div class="tablebox2">
-            <div class="item" style="background: #f5f93bad">
-                <b>Table 2</b><br>
-                Seat Capacity: 4<br>
-                Seat Occupied: 4<br>
-                <b>Status: Reserved</b> 
-            </div>
-        </div>&nbsp;&nbsp;
-        <div class="tablebox2">
-            <div class="item" style="background: #f5f93bad">
-                <b>Table 3</b><br>
-                Seat Capacity: 4<br>
-                Seat Occupied: 4<br>
-                <b>Status: Reserved</b> 
-            </div>
-        </div>&nbsp;&nbsp;
-        <div class="tablebox3">
-            <div class="item" style="background: #93cc66ad;">
-                <b>Table 4</b><br>
-                Seat Capacity: 4<br>
-                Seat Occupied: 0<br>
-                <b>Status: Available</b> 
-            </div>
-        </div>&nbsp;&nbsp;
-        <div class="tablebox">
-            <div class="item">
-                <b>Table 5</b><br>
-                Seat Capacity: 4<br>
-                Seat Occupied: 3<br>
-                <b>Status: Occupied</b> 
-            </div>
-        </div>&nbsp;&nbsp;
-        <div class="tablebox3">
-            <div class="item" style="background: #93cc66ad;">
-                <b>Table 6</b><br>
-                Seat Capacity: 4<br>
-                Seat Occupied: 0<br>
-                <b>Status: Available</b> 
-            </div>
-        </div>&nbsp;&nbsp;
-        <div class="tablebox">
-            <div class="item">
-                <b>Table 1</b><br>
-                Seat Capacity: 4<br>
-                Seat Occupied: 4<br>
-                <b>Status: Occupied</b> 
-            </div>
-        </div>&nbsp;&nbsp;
-        <div class="tablebox2">
-            <div class="item" style="background: #f5f93bad;">
-                <b>Table 2</b><br>
-                Seat Capacity: 4<br>
-                Seat Occupied: 4<br>
-                <b>Status: Reserved</b> 
-            </div>
-        </div>&nbsp;&nbsp;
-        <div class="tablebox2">
-            <div class="item" style="background: #f5f93bad;">
-                <b>Table 3</b><br>
-                Seat Capacity: 4<br>
-                Seat Occupied: 4<br>
-                <b>Status: Reserved</b> 
-            </div>
-        </div>&nbsp;&nbsp;
-        <div class="tablebox3">
-            <div class="item" style="background: #93cc66ad;">
-                <b>Table 4</b><br>
-                Seat Capacity: 4<br>
-                Seat Occupied: 0<br>
-                <b>Status: Available</b> 
-            </div>
-        </div>&nbsp;&nbsp;
-        <div class="tablebox">
-            <div class="item">
-                <b>Table 5</b><br>
-                Seat Capacity: 4<br>
-                Seat Occupied: 3<br>
-                <b>Status: Occupied</b> 
-            </div>
-        </div>&nbsp;&nbsp;
-        <div class="tablebox3">
-            <div class="item" style="background: #93cc66ad;">
-                <b>Table 6</b><br>
-                Seat Capacity: 4<br>
-                Seat Occupied: 0<br>
-                <b>Status: Available</b> 
-            </div>
-        </div>&nbsp;&nbsp;
-        <div class="tablebox">
-            <div class="item">
-                <b>Table 1</b><br>
-                Seat Capacity: 4<br>
-                Seat Occupied: 4<br>
-                <b>Status: Occupied</b> 
-            </div>
-        </div>&nbsp;&nbsp;
-        <div class="tablebox2">
-            <div class="item" style="background: #f5f93bad">
-                <b>Table 2</b><br>
-                Seat Capacity: 4<br>
-                Seat Occupied: 4<br>
-                <b>Status: Reserved</b> 
-            </div>
-        </div>&nbsp;&nbsp;
-        <div class="tablebox2">
-            <div class="item" style="background: #f5f93bad">
-                <b>Table 3</b><br>
-                Seat Capacity: 4<br>
-                Seat Occupied: 4<br>
-                <b>Status: Reserved</b> 
-            </div>
-        </div>&nbsp;&nbsp;
-        <div class="tablebox3">
-            <div class="item" style="background: #93cc66ad;">
-                <b>Table 4</b><br>
-                Seat Capacity: 4<br>
-                Seat Occupied: 0<br>
-                <b>Status: Available</b> 
-            </div>
-        </div>&nbsp;&nbsp;
-        <div class="tablebox">
-            <div class="item">
-                <b>Table 5</b><br>
-                Seat Capacity: 4<br>
-                Seat Occupied: 3<br>
-                <b>Status: Occupied</b> 
-            </div>
-        </div>&nbsp;&nbsp;
-        <div class="tablebox3">
-            <div class="item" style="background: #93cc66ad;">
-                <b>Table 6</b><br>
-                Seat Capacity: 4<br>
-                Seat Occupied: 0<br>
-                <b>Status: Available</b> 
-            </div>
-        </div>&nbsp;&nbsp;
     </div>
-
-    <section class="content" style="background-color:#fff;padding:20px;">
-        <div class="container-fluid">
-            @if(session('success'))
+    @if(session('success'))
                 <div class="alert alert-success">
                     {{ session('success') }}
                 </div>
             @endif
+    <div class="tablecontainer">
+
+        @foreach($tables->sortBy('branch_name') as $table)
+            <div class="tablebox" 
+                style="background: 
+                    @if($table->active == 0) #ff0000ad; 
+                    @elseif($table->active == 1) #14af0bad; 
+                    @elseif($table->active == 3) #ffca00; 
+                    @endif;">
+                <div class="item">
+                    <b>{{ $table->table_name }}</b><br>
+                    Seat Capacity: {{ $table->capacity }}<br>
+                    Floor: {{ $table->store_name }}<br>
+                    Branch: {{ $table->branch_name }}<br>
+                    <b>Status: 
+                        @if($table->active == 0)
+                            Occupied
+                        @elseif($table->active == 1)
+                            Available
+                        @elseif($table->active == 3)
+                            Reserved
+                        @endif
+                    </b> 
+                </div>
+            </div>&nbsp;&nbsp;
+        @endforeach
+
+    </div>
+    <br>
+    <section class="content" style="background-color:#fff;padding:20px;">
+        <div class="container-fluid">
 
             <table id="storesTable" class="table table-bordered">
                 <thead>
@@ -186,7 +84,7 @@
                 </thead>
                 <tbody>
                     @php $i =1 @endphp
-                    @foreach($tables as $table)
+                    @foreach($tables->sortBy('branch_name') as $table)
                         <tr>
                             <td>{{ $i++ }}</td>
                             <td>{{ $table->table_name }}</td>
@@ -194,7 +92,15 @@
                             <td>{{ $table->available }}</td>
                             <td>{{ $table->store_name }}</td>
                             <td>{{ $table->branch_name }}</td>
-                            <td>{{ $table->active ? 'Yes' : 'No' }}</td>
+                            <td>
+                                @if($table->active == 1)
+                                    Yes
+                                @elseif($table->active == 0)
+                                    No
+                                @else($table->active == 3)
+                                    Reserved
+                                @endif
+                            </td>
                             <td>
                                 <a href="{{ route('tables.edit', $table->id) }}" class="btn btn-primary btn-sm">Edit</a>
                                 <form action="{{ route('tables.destroy', $table->id) }}" method="POST" style="display:inline;">
@@ -213,6 +119,37 @@
 
 <style>
 
+    /* Add the container style */
+    .form-container {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr); /* Creates two equal-width columns */
+        gap: 20px; /* Adds space between the columns */
+    }
+
+    /* Make sure form groups are stacked on smaller screens */
+    @media (max-width: 768px) {
+        .form-container {
+            grid-template-columns: 1fr; /* Stack columns on small screens */
+        }
+    }
+
+    /* Ensure the select elements fill the container */
+    .form-group {
+        width: 100%;
+    }
+
+    /* Style the form control to be more consistent */
+    .form-control {
+        width: 100%;
+        padding: 8px;
+        margin-top: 5px;
+        border-radius: 4px;
+        border: 1px solid #ccc;
+    }
+
+</style>
+<style>
+
 .tablecontainer {
   display: flex;
   flex-direction: column;
@@ -226,27 +163,18 @@
   }
 }
 
+@media screen and (min-width: 768px) {
+  .tablebox{width: 221px;}
+}
+
 .tablebox {
-    background: #ff0000ad;
     color: white;
     padding: 1px;
     border-radius: 12px;
 }
 
-.tablebox2 {
-    background: #ffca00;
-    padding: 1px;
-    border-radius: 12px;
-}
-
-.tablebox3 {
-    background: #adf177ad;
-    padding: 1px;
-    border-radius: 12px;
-}
-
 .item {
-  background: #cc6666ad;
+  background: #30376bad;
   border-radius: 32px;
   padding: 15px;
   margin: 10px;
@@ -269,6 +197,7 @@
     $('#storesTable').DataTable({
       responsive: true, // Enable responsive behavior
       dom: 'Bfrtip',
+      pageLength: 20,
         buttons: [
             {
                 extend: 'print',

@@ -23,6 +23,29 @@ class OrdersController extends Controller
         return view('orders.index', compact('orders'));
     }
 
+    public function getTables($storeId)
+    {
+        $user_company_id = Auth::user()->company_id;
+        $tables = DB::table('tables')
+        ->select('id', 'table_name')
+            ->where('store_id', $storeId)
+            ->where('company_id', $user_company_id)
+            ->get();
+
+        return response()->json($tables);
+    }
+
+    public function getStore($branchId)
+    {
+        $user_company_id = Auth::user()->company_id;
+        $stores = DB::table('stores')
+            ->where('branch_id', $branchId)
+            ->where('company_id', $user_company_id)
+            ->get();
+
+        return response()->json($stores);
+    }
+
     /**
      * Show the form for creating a new resource.
      */
@@ -90,6 +113,15 @@ class OrdersController extends Controller
         ];
 
         $orderId = DB::table('orders')->insertGetId($orderData);
+
+
+        $tableId =  $request->table;
+
+        // $tableInfo = DB::table('tables')->where('id',$tableId)->first();
+
+        DB::table('tables')->where('id', $tableId)->update([
+            'active' => 0
+        ]);
 
         // Store order items
         foreach ($request->products as $product) {
