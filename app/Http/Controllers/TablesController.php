@@ -26,6 +26,18 @@ class TablesController extends Controller
         return view('tables.index', compact('tables'));
     }
 
+    public function getFloor($floorId)
+    {
+        $user_company_id = Auth::user()->company_id;
+    
+            // Fetch stores for the logged-in user's company where active status is 1
+            $stores = DB::table('stores')
+                        ->where('active', 1)
+                        ->where('company_id', $user_company_id)
+                        ->get();
+        return response()->json($stores);
+    }
+
     /**
      * Show the form for creating a new resource.
      */
@@ -84,9 +96,18 @@ class TablesController extends Controller
         $table = DB::table('tables')
             ->join('stores', 'tables.store_id', '=', 'stores.id')
             ->join('branch', 'stores.branch_id', '=', 'branch.id') // Join the branches table
-            ->select('tables.*', 'stores.name as store_name', 'branch.name as branch_name', 'branch.id as selectedBranchId') // Select branch name
+            ->select(
+                'tables.*',
+                'stores.name as store_name',
+                'stores.id as selectedStoreId',
+                'branch.name as branch_name',
+                'branch.id as selectedBranchId'
+                ) // Select branch name
             ->where('tables.id', $id)
             ->first();
+
+
+        $branch = $table->selectedBranchId;
 
             $user_company_id = Auth::user()->company_id;
 
@@ -98,6 +119,7 @@ class TablesController extends Controller
             // Fetch stores for the logged-in user's company where active status is 1
             $stores = DB::table('stores')
                         ->where('active', 1)
+                        ->where('branch_id', $branch)
                         ->where('company_id', $user_company_id)
                         ->get();
     

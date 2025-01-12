@@ -28,7 +28,6 @@
                 <div class="form-group">
                     <label for="branch">Branch:</label>
                     <select name="branch_id" id="branch" class="form-control" required>
-                        <option value="">Select Branch</option>
                         @foreach($branches as $branch)
                             <option value="{{ $branch->id }}" {{ $branch->id == $table->selectedBranchId ? 'selected' : '' }}>
                                 {{ $branch->name }}
@@ -39,9 +38,8 @@
                 <div class="form-group">
                     <label for="store_id">Store:</label>
                     <select name="store_id" id="store" class="form-control" required>
-                        <option value="" disabled>Select Floor</option>
                         @foreach($stores as $store)
-                            <option value="{{ $store->id }}" {{ $store->id == $table->store_id ? 'selected' : '' }}>
+                            <option value="{{ $table->id }}" {{ $store->id == $table->selectedStoreId ? 'selected' : '' }}>
                                 {{ $store->name }}
                             </option>
                         @endforeach
@@ -65,30 +63,63 @@
 @push('masterScripts')
 <script>
     $(document).ready(function () {
-        // Fetch Floors based on selected Branch
+
         $('#branch').on('change', function () {
             var branchId = $(this).val();
             if (branchId) {
                 $.ajax({
-                    url: '/get-floor/' + branchId, // URL for fetching floors
+                    url: '/get-floor/' + branchId,
                     type: 'GET',
                     dataType: 'json',
                     success: function (data) {
-                        $('#store').empty().append('<option value="" disabled selected>Select Floor</option>');
+                        $('#store').empty().append('<option value="">Select Floor</option>');
                         $.each(data, function (key, value) {
                             $('#store').append('<option value="' + value.id + '">' + value.name + '</option>');
                         });
+
+                        // Clear the Table dropdown
+                        $('#table').empty().append('<option value="">Select Table</option>');
                     },
                     error: function (xhr, status, error) {
                         console.error('Error fetching floors:', error);
                     }
                 });
             } else {
-                $('#store').empty().append('<option value="" disabled selected>Select Floor</option>');
+                $('#store').empty().append('<option value="">Select Floor</option>');
+                $('#table').empty().append('<option value="">Select Table</option>');
             }
         });
 
-        
+
+
+
+
+        // Fetch Floors based on selected Branch
+        // $('#branch').on('change', function () {
+        //     var branchId = $(this).val();
+        //     if (branchId) {
+        //         $.ajax({
+        //             url: '/get-branch/' + branchId, // URL for fetching floors
+        //             type: 'GET',
+        //             dataType: 'json',
+        //             success: function (data) {
+        //                 $('#store').empty().append('<option value="" disabled selected>Select Floor</option>');
+        //                 $.each(data, function (key, value) {
+        //                     $('#store').append('<option value="' + value.id + '">' + value.name + '</option>');
+        //                 });
+        //             },
+        //             error: function (xhr, status, error) {
+        //                 console.error('Error fetching floors:', error);
+        //             }
+        //         });
+        //     } else {
+        //         $('#store').empty().append('<option value="" disabled selected>Select Floor</option>');
+        //     }
+        // });
+
+
+
+
     });
 </script>
 @endpush
