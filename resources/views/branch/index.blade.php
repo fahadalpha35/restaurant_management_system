@@ -36,7 +36,7 @@
                 </thead>
                 <tbody>
                     @php $i =1 @endphp
-                    @foreach($branches as $branch)
+                    @foreach($branches->sortBy('branch_name') as $branch)
                         <tr>
                             <td>{{ $i++ }}</td>
                             <td>{{ $branch->name }}</td>

@@ -43,7 +43,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/get-subcategories/{categoryId}', [ProductsController::class, 'getSubcategories']);
     Route::get('/get-floor/{branchId}', [OrdersController::class, 'getStore']);
     Route::get('/get-table/{storeId}', [OrdersController::class, 'getTables']);
-    // Route::get('/get-branch/{floorId}', [TablesController::class, 'getFloor']);
     Route::resource('company', CompanyController::class);
     Route::resource('groups', GroupsController::class);
     Route::resource('orders', OrdersController::class);

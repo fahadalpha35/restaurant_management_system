@@ -90,36 +90,6 @@
             }
         });
 
-
-
-
-
-        // Fetch Floors based on selected Branch
-        // $('#branch').on('change', function () {
-        //     var branchId = $(this).val();
-        //     if (branchId) {
-        //         $.ajax({
-        //             url: '/get-branch/' + branchId, // URL for fetching floors
-        //             type: 'GET',
-        //             dataType: 'json',
-        //             success: function (data) {
-        //                 $('#store').empty().append('<option value="" disabled selected>Select Floor</option>');
-        //                 $.each(data, function (key, value) {
-        //                     $('#store').append('<option value="' + value.id + '">' + value.name + '</option>');
-        //                 });
-        //             },
-        //             error: function (xhr, status, error) {
-        //                 console.error('Error fetching floors:', error);
-        //             }
-        //         });
-        //     } else {
-        //         $('#store').empty().append('<option value="" disabled selected>Select Floor</option>');
-        //     }
-        // });
-
-
-
-
     });
 </script>
 @endpush

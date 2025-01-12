@@ -11,21 +11,38 @@ class TablesController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         $user_company_id = Auth::user()->company_id;
 
-        // Fetch all tables with their associated store names and branch names
-        $tables = DB::table('tables')
+        // Fetch branches and floors for the dropdown filters
+        $branches = DB::table('branch')
+            ->where('company_id', $user_company_id)
+            ->pluck('name', 'id');
+
+        $floors = DB::table('stores')
+            ->where('company_id', $user_company_id)
+            ->pluck('name', 'id');
+
+        // Filter tables based on selected branch and floor
+        $query = DB::table('tables')
             ->join('stores', 'tables.store_id', '=', 'stores.id')
-            ->join('branch', 'stores.branch_id', '=', 'branch.id') // Join the branches table
-            ->select('tables.*', 'stores.name as store_name', 'branch.name as branch_name') // Select branch name
-            ->where('tables.company_id', $user_company_id)
-            ->get();
+            ->join('branch', 'stores.branch_id', '=', 'branch.id')
+            ->select('tables.*', 'stores.name as store_name', 'branch.name as branch_name')
+            ->where('tables.company_id', $user_company_id);
 
-        return view('tables.index', compact('tables'));
+        if ($request->has('branch') && $request->branch) {
+            $query->where('branch.id', $request->branch);
+        }
+
+        if ($request->has('floor') && $request->floor) {
+            $query->where('stores.id', $request->floor);
+        }
+
+        $tables = $query->get();
+
+        return view('tables.index', compact('tables', 'branches', 'floors'));
     }
-
     public function getFloor($floorId)
     {
         $user_company_id = Auth::user()->company_id;

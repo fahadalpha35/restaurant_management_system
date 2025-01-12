@@ -15,30 +15,39 @@
         </div>
     </div>
 
-    <div class="form-container">
-            <div class="form-group">
-                <label for="store">Branch Name:</label>
-                <select name="store" id="store" class="form-control">
-                    <option value="">Select Branch</option>
-                    <!-- Add options here -->
-                </select>
-            </div>
+    <form id="filterForm" method="GET" action="{{ route('tables.index') }}">
+        <div class="form-container">
+        <div class="form-group">
+            <label for="branch">Branch Name:</label>
+            <select name="branch" id="branch" class="form-control" onchange="document.getElementById('filterForm').submit();">
+                <option value="">Select Branch</option>
+                @foreach(collect($branches)->sortBy(function($name, $id) {
+                    return $name;
+                }) as $id => $name)
+                    <option value="{{ $id }}" {{ request('branch') == $id ? 'selected' : '' }}>{{ $name }}</option>
+                @endforeach
+            </select>
+        </div>
 
-            <div class="form-group">
-                <label for="other">Floor Name:</label>
-                <select name="other" id="other" class="form-control">
+        <div class="form-group">
+                <label for="floor">Floor Name:</label>
+                <select name="store" id="store" class="form-control" onchange="document.getElementById('filterForm').submit();">
                     <option value="">Select Floor</option>
-                    <!-- Add options here -->
+                    @foreach($floors as $id => $name)
+                        <option value="{{ $id }}" {{ request('floor') == $id ? 'selected' : '' }}>{{ $name }}</option>
+                    @endforeach
                 </select>
             </div>
-    </div>
-    @if(session('success'))
-                <div class="alert alert-success">
-                    {{ session('success') }}
-                </div>
-            @endif
-    <div class="tablecontainer">
+        </div>
+    </form>
 
+    @if(session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+    @endif
+
+    <div class="tablecontainer">
         @foreach($tables->sortBy('branch_name') as $table)
             <div class="tablebox" 
                 style="background: 
@@ -63,12 +72,10 @@
                 </div>
             </div>&nbsp;&nbsp;
         @endforeach
-
     </div>
     <br>
     <section class="content" style="background-color:#fff;padding:20px;">
         <div class="container-fluid">
-
             <table id="storesTable" class="table table-bordered">
                 <thead>
                     <tr>
@@ -193,38 +200,49 @@
 
 @push('masterScripts')
 <script>
-     $(document).ready(function() {
-    $('#storesTable').DataTable({
-      responsive: true, // Enable responsive behavior
-      dom: 'Bfrtip',
-      pageLength: 20,
-        buttons: [
-            {
-                extend: 'print',
-                exportOptions: {
-                    columns: ':not(:last-child)' // Exclude the last column (Labeling) from printing
-                }
-            },
-            {
-                extend: 'csvHtml5',
-                exportOptions: {
-                    columns: ':not(:last-child)' // Exclude the last column (Labeling) from CSV
-                }
-            },
-            {
-                extend: 'excelHtml5',
-                exportOptions: {
-                    columns: ':not(:last-child)' // Exclude the last column (Labeling) from Excel
-                }
-            },
-            {
-                extend: 'pdfHtml5',
-                exportOptions: {
-                    columns: ':not(:last-child)' // Exclude the last column (Labeling) from PDF
-                }
-            }
-        ]
+    $(document).ready(function() {
+        $('#storesTable').DataTable({
+            responsive: true,
+            dom: 'Bfrtip',
+            pageLength: 20,
+            buttons: [
+                { extend: 'print', exportOptions: { columns: ':not(:last-child)' } },
+                { extend: 'csvHtml5', exportOptions: { columns: ':not(:last-child)' } },
+                { extend: 'excelHtml5', exportOptions: { columns: ':not(:last-child)' } },
+                { extend: 'pdfHtml5', exportOptions: { columns: ':not(:last-child)' } }
+            ]
+        });
     });
-});
-  </script>
+</script>
+<script>
+    $(document).ready(function () {
+
+        $('#branch').on('change', function () {
+            var branchId = $(this).val();
+            if (branchId) {
+                $.ajax({
+                    url: '/get-floor/' + branchId,
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function (data) {
+                        $('#store').empty().append('<option value="">Select Floor</option>');
+                        $.each(data, function (key, value) {
+                            $('#store').append('<option value="' + value.id + '">' + value.name + '</option>');
+                        });
+
+                        // Clear the Table dropdown
+                        $('#table').empty().append('<option value="">Select Table</option>');
+                    },
+                    error: function (xhr, status, error) {
+                        console.error('Error fetching floors:', error);
+                    }
+                });
+            } else {
+                $('#store').empty().append('<option value="">Select Floor</option>');
+                $('#table').empty().append('<option value="">Select Table</option>');
+            }
+        });
+
+    });
+</script>
   @endpush

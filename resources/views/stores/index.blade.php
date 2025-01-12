@@ -33,7 +33,7 @@
                 </thead>
                 <tbody>
                     @php $i =1 @endphp
-                    @foreach($stores as $store)
+                    @foreach($stores->sortBy('branch_name') as $store)
                         <tr>
                             <td>{{ $i++ }}</td>
                             <td>{{ $store->name }}</td>
