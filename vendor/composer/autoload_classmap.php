@@ -7,6 +7,8 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'App\\Http\\Controllers\\API\\AuthController' => $baseDir . '/app/Http/Controllers/API/AuthController.php',
+    'App\\Http\\Controllers\\API\\StoresController' => $baseDir . '/app/Http/Controllers/API/StoresController.php',
+    'App\\Http\\Controllers\\API\\TablesController' => $baseDir . '/app/Http/Controllers/API/TablesController.php',
     'App\\Http\\Controllers\\Auth\\AuthController' => $baseDir . '/app/Http/Controllers/Auth/AuthController.php',
     'App\\Http\\Controllers\\Auth\\ConfirmPasswordController' => $baseDir . '/app/Http/Controllers/Auth/ConfirmPasswordController.php',
     'App\\Http\\Controllers\\Auth\\ForgotPasswordController' => $baseDir . '/app/Http/Controllers/Auth/ForgotPasswordController.php',
@@ -14,6 +16,7 @@ return array(
     'App\\Http\\Controllers\\Auth\\RegisterController' => $baseDir . '/app/Http/Controllers/Auth/RegisterController.php',
     'App\\Http\\Controllers\\Auth\\ResetPasswordController' => $baseDir . '/app/Http/Controllers/Auth/ResetPasswordController.php',
     'App\\Http\\Controllers\\Auth\\VerificationController' => $baseDir . '/app/Http/Controllers/Auth/VerificationController.php',
+    'App\\Http\\Controllers\\BranchController' => $baseDir . '/app/Http/Controllers/BranchController.php',
     'App\\Http\\Controllers\\CategoryController' => $baseDir . '/app/Http/Controllers/CategoryController.php',
     'App\\Http\\Controllers\\CompanyController' => $baseDir . '/app/Http/Controllers/CompanyController.php',
     'App\\Http\\Controllers\\Controller' => $baseDir . '/app/Http/Controllers/Controller.php',
@@ -24,6 +27,7 @@ return array(
     'App\\Http\\Controllers\\ProfileController' => $baseDir . '/app/Http/Controllers/ProfileController.php',
     'App\\Http\\Controllers\\ReportsController' => $baseDir . '/app/Http/Controllers/ReportsController.php',
     'App\\Http\\Controllers\\SettingController' => $baseDir . '/app/Http/Controllers/SettingController.php',
+    'App\\Http\\Controllers\\SidebarController' => $baseDir . '/app/Http/Controllers/SidebarController.php',
     'App\\Http\\Controllers\\StoresController' => $baseDir . '/app/Http/Controllers/StoresController.php',
     'App\\Http\\Controllers\\SubCategoryController' => $baseDir . '/app/Http/Controllers/SubCategoryController.php',
     'App\\Http\\Controllers\\TablesController' => $baseDir . '/app/Http/Controllers/TablesController.php',

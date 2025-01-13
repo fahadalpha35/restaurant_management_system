@@ -10,9 +10,13 @@
       </li>
       <li class="nav-item d-none d-sm-inline-block">
         <a href="#" class="nav-link">Contact</a>
-      </li> -->
+      </li>
+       - O<font color="#e9212b">R</font>MS
+      -->
       <!-- &nbsp;&nbsp;&nbsp;&nbsp;<a href="{{url('/')}}"><font color="#10673b" size="5"><b>O<font color="#e9212b">R</font>MS</b></font></a> -->
-      &nbsp;&nbsp;&nbsp;&nbsp;<a href="{{url('/')}}"><font color="#fff" size="5"><b>O<font color="#e9212b">R</font>MS</b></font></a>
+    <div style="margin-top:6px;">
+      &nbsp;&nbsp;&nbsp;&nbsp;<a href="{{url('/')}}"><font color="#fff" size="4"><b>{{ getCompany(auth()->user()->company_id)->company_name }}</b></font></a>
+    </div>
     </ul>
 
     <!-- Right navbar links -->
@@ -217,8 +221,8 @@
       </li>
       <li class="nav-item nav-profile dropdown">
                 <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="profileDropdown" style="color: #fff;">
-                <img src="{{ asset('dist/img/fahad.jpg') }}" alt="Avatar" class="resprofile"/>
-
+                <!-- <img src="{{ asset('dist/img/fahad.jpg') }}" alt="Avatar" class="resprofile"/> -->
+                <img src="{{ asset('images/users/' . (Auth::user()->image ? Auth::user()->image : 'item.png')) }}" alt="Avatar" class="resprofile" />
                 </a>
                 
                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
