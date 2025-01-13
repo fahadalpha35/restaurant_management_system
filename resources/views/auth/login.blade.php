@@ -5,22 +5,61 @@
   <title>ORMS</title>
   <!-- Favicon -->
   <link rel="icon" type="image/x-icon" href="/dist/img/res.svg">
+  <style>
+        .image-column {
+            flex: 1;
+            max-width: 60%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
 
+        .image-column img {
+            max-width: 100%;
+            height: 100%;
+            border-radius: 10px;
+            /* box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); */
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .form-section {
+                flex-direction: column;
+            }
+
+            .form-column, .image-column {
+                max-width: 100%;
+                padding: 30px 0px 0px 0px;
+            }
+
+            .form {
+                max-width: 100%;
+            }
+        }
+    </style>
 </head>
 <body>
 <main>
 <!-- #310693 -->
     <section class="form-section">
-        <div class="form-wrapper" style="background: linear-gradient(90deg, #30376b 1%, #14af0b 50%, #30376b 99%);">
-          <div style="background: linear-gradient(90deg, rgba(48,55,107,1) 22%, rgba(20,175,11,1) 50%, rgba(48,55,107,1) 78%);border: 4px solid rgba(4, 88, 0, 0.68);height:55px;">
-                  <a href="{{ url('/') }}" class="brand-link reslogo" >
-                  <center><font color="#fff" face="Georgia" weight="bolder" size="5"><b><font color="#ffca00">R</font>estaurant<font color="#ff0000ad">P</font><font color="#459fff">O</font><font color="#ff0000ad">S</font></b></font></center>
+        <div class="form-wrapper" style="">
+        <div class="form-column">
+        <div style="padding:25px 0px 0px 0px;">
+          <div style="border-top:2px solid #000000;border-bottom:2px solid #000000;background:#220467;border-top-left-radius: 25px;border-top-right-radius: 25px;">
+                  <a href="{{ url('/') }}" class="brand-link reslogo">
+                  <center><font color="#fff" face="Georgia" weight="bolder" size="6"><b><font color="#fff">R</font>estaurant<font color="#ff0000ad">P</font><font color="#82beff">O</font><font color="#ff0000ad">S</font></b></font></center>
                   </a>
           </div>
-        <center><h1 class=""><font color="#ffffff">{{ __('Welcome') }}</font></h1></center>
+        </div>
+        <div style="">
+          <img src="dist/img/res1.jpg" style="width:100%;border-bottom-left-radius: 40px;border-bottom-right-radius: 40px;">
+        </div>
+          <!-- <center><font color="#3a0ca3" size="5"><b>{{ __('Welcome') }}</b></font></center>
             <center>
-                <p><font color="#ffffff">{{ __('Please Login To Your Account') }}</font></p>
-            </center>
+                <p><font color="#069371" size="2">{{ __('Please Login To Your Account') }}</font></p>
+            </center> -->
+            <center><p><font color="#1a6ec8" size=""><b><font color="#3a0ca3" size="3">Welcome!</font></b> Please Login To Your Account</font></p></center>
             <form method="POST" action="{{ route('login') }}" class="form">
                 @csrf
 
@@ -73,6 +112,13 @@
                     </div> -->
                 </footer>
             </form>
+          </div>
+        </div>
+
+
+        <!-- Right Column: Image -->
+        <div class="image-column">
+            <img src="dist/img/res1.svg" alt="Login Image">
         </div>
     </section>
 </main>
@@ -237,7 +283,7 @@ input:not([type="submit"]):user-invalid {
 /* Form */
 
 .form-section {
-  background: linear-gradient(90deg, rgba(5,22,115,1) 10%, rgba(140,63,226,1) 50%, rgba(5,22,115,1) 90%);
+  background: linear-gradient(90deg, rgba(5,22,115,1) 10%, #007bff 50%, rgba(5,22,115,1) 90%);
   min-height: 100%;
   display: flex;
   padding: clamp(2rem, 2vw, 2rem);

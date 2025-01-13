@@ -1,9 +1,9 @@
 <!-- Main Sidebar Container -->
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
   <!-- Brand Logo -->
-  <a href="{{ url('/') }}" class="brand-link reslogo" style="background: linear-gradient(90deg, rgba(48,55,107,1) 22%, rgba(20,175,11,1) 50%, rgba(48,55,107,1) 78%);border: 4px solid rgba(4, 88, 0, 0.68);">
+  <a href="{{ url('/') }}" class="brand-link reslogo" style="background: linear-gradient(90deg, rgba(48,55,107,1) 22%, #007bff 50%, rgba(48,55,107,1) 78%);border: 2px solid #220467;">
   <!-- <center><img src="{{ asset('dist/img/orms.png') }}" alt="AdminLTE Logo" style="width:220px;"></center>   -->
-  <center><font color="#fff" face="Georgia" weight="bolder" size="5"><b><font color="#ffca00">R</font>estaurant<font color="#ff0000ad">P</font><font color="#459fff">O</font><font color="#ff0000ad">S</font></b></font></center>
+  <center><font color="#fff" face="Georgia" weight="bolder" size="5"><b><font color="">R</font>estaurant<font color="#ff0000ad">P</font><font color="#82beff">O</font><font color="#ff0000ad">S</font></b></font></center>
   <!-- <center><font color="#fff"><img src="{{ asset('dist/img/orms.png') }}" alt="AdminLTE Logo" style="width:100%;"></font></center> -->
   </a>
 
